@@ -73,50 +73,62 @@
 						<li>
 								<a class="accordion-toggle" href="#">
 										<span class="glyphicons glyphicons-fire"></span>
-										<span class="sidebar-title">Admin Plugins</span>
+										<span class="sidebar-title">Users</span>
 										<span class="caret"></span>
 								</a>
 								<ul class="nav sub-nav">
 										<li>
-												<a href="admin_plugins-panels.html">
-														<span class="glyphicons glyphicons-book"></span> Admin Panels </a>
+											<a href="area_listing.php">
+											<span class="glyphicons glyphicons-book"></span> Area</a>
 										</li>
 										<li>
-												<a href="admin_plugins-modals.html">
-														<span class="glyphicons glyphicons-show_big_thumbnails"></span> Admin Modals </a>
+											<a href="state_listing.php">
+											<span class="glyphicons glyphicons-show_big_thumbnails"></span> State </a>
 										</li>
 										<li>
-												<a href="admin_plugins-dock.html">
-														<span class="glyphicons glyphicons-sampler"></span> Admin Dock </a>
+											<a href="district_listing.php">
+											<span class="glyphicons glyphicons-sampler"></span> District </a>
 										</li>
+										<li>
+											<a href="city_listing.php">
+											<span class="glyphicons glyphicons-sampler"></span> City </a>
+										</li>										
+										<li>
+											<a href="company_listing.php">
+											<span class="glyphicons glyphicons-sampler"></span> Company </a>
+										</li>										
+										<li>
+											<a href="tariff_listing.php">
+											<span class="glyphicons glyphicons-sampler"></span> Tariff </a>
+										</li>
+										<li>
+											<a href="reason_listing.php">
+											<span class="glyphicons glyphicons-sampler"></span> Reason </a>
+										</li>
+										<li>
+											<a href="user_listing.php">
+											<span class="glyphicons glyphicons-sampler"></span> Users </a>
+										</li>										
 								</ul>
 						</li>
 						<li>
 								<a class="accordion-toggle" href="#">
 										<span class="glyphicons glyphicons-cup"></span>
-										<span class="sidebar-title">Admin Forms</span>
+										<span class="sidebar-title">Admin Menus</span>
 										<span class="caret"></span>
 								</a>
 								<ul class="nav sub-nav">
 										<li>
 												<a href="admin_forms-elements.html">
-														<span class="glyphicons glyphicons-edit"></span> Admin Elements </a>
+														<span class="glyphicons glyphicons-edit"></span> Payment </a>
 										</li>
 										<li>
 												<a href="admin_forms-widgets.html">
-														<span class="glyphicons glyphicons-calendar"></span> Admin Widgets </a>
+														<span class="glyphicons glyphicons-calendar"></span> My Profile </a>
 										</li>
 										<li>
 												<a href="admin_forms-layouts.html">
-														<span class="glyphicons glyphicons-more_windows"></span> Admin Layouts </a>
-										</li>
-										<li>
-												<a href="admin_forms-wizard.html">
-														<span class="glyphicons glyphicons-magic"></span> Admin Wizard </a>
-										</li>                            
-										<li>
-												<a href="admin_forms-validation.html">
-														<span class="glyphicons glyphicons-check"></span> Admin Validation </a>
+														<span class="glyphicons glyphicons-more_windows"></span> Usage </a>
 										</li>
 								</ul>
 						</li>
