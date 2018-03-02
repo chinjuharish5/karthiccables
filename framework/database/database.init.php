@@ -38,6 +38,21 @@ class Database {
 		}
 	}	
 	
+	public function fetchQuery($query) {
+		try {
+			$results = @mysqli_query ( $this->connection, $query );
+			if($results->num_rows > 0) {
+				//return mysqli_fetch_assoc($results);
+				return mysqli_fetch_all($results,MYSQLI_ASSOC);
+			} 
+			return array();
+			//return $results;
+		} catch ( Exception $ex ) {
+			$resultSet = @mysqli_query($this->connection, 'SHOW FULL PROCESSLIST');
+			var_export($resultSet,true);
+		}
+	}		
+	
 	public function getLastInsertId() {
 		return @mysqli_insert_id($this->connection);
 	}

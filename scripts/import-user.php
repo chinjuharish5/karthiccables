@@ -28,57 +28,40 @@ if (($handle = fopen("../uploads/User_Upload_Sample_data.csv", "r")) !== FALSE) 
 	$door_no = $data[10];
 	
 	//add Till last 39 fields
-	$door_no = $data[11];
+	$street_name = $data[11];
+        $city = $data[12];
+	$district = $data[13];
+        $state = $data[14];
+        $pin_code = $data[15];
+        $same_address = $data[16];
+        $perm_door_no = $data[17];
+        $perm_street_name = $data[18];
+	$perm_city = $data[19];
+        $perm_district = $data[20];
+        $perm_state = $data[21];
+        $perm_pincode = $data[22];
+        $house = $data[23];
+        $email_id = $data[24];
+        $company= $data[25];
+        $branch = $data[26];
+        $account_status = $data[27];
+        $reason = $data[28];
+	$instal_date = $data[29];
+        $activation_date = $data[30];
+        $deact_date = $data[31];
+        $shift_date = $data[32];
+        $rejoint_date = $data[33];
+        $tariff = $data[34];
+        $advance = $data[35];
+        $balance = $data[36];
+        
+	if($kctv_id!='') {	
+		$ins_query = "INSERT INTO user_import_dump (kctv_id, caf_id, ca_id, tactv_customer_id, eb_sc_no, customer_name, area_code, area, mobile_number, alternate_number, door_no, street_name, city, district, state, pin_code, same_address, permanent_door_no, permanent_street_name, permanent_city, permanent_district, permanent_state, permanent_pin_code, house, email_id, company, branch, account_status, reason, installation_date, activation_date, deactivation_date, shifting_date, rejoint_date, tariff, advance, balance) VALUES ('".$kctv_id."', '".$caf_id."', '".$ca_id."', '".$tactv_id."', '".$eb_sc_no."', '".$customer_name."', '".$area_code."', '".$area."', '".$mobile_number."', '".$alternate_number."', '".$door_no."', '".$street_name."', '".$city."', '".$district."', '".$state."', '".$pin_code."', '".$same_address."',  '".$perm_door_no."', '".$perm_street_name."', '".$perm_city."', '".$perm_district."', '".$perm_state."', '".$perm_pincode."', '".$house."', '".$email_id."', '".$company."', '".$branch."', '".$account_status."', '".$reason."', '".$instal_date."', '".$activation_date."', '".$deact_date."', '".$shift_date."', '".$rejoint_date."', '".$tariff."', '".$advance."', '".$balance."') ";
 	
-	/*
-	CREATE TABLE `user_import_dump` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `kctv_id` varchar(50) DEFAULT NULL,
-  `caf_id` varchar(50) DEFAULT NULL,
-  `ca_id` varchar(50) DEFAULT NULL,
-  `tactv_customer_id` varchar(50) DEFAULT NULL,
-  `customer_name` varchar(250) DEFAULT NULL,
-  `area_code` varchar(10) DEFAULT NULL,
-  `area` text,
-  `mobile_number` varchar(20) DEFAULT NULL,
-  `alternate_number` varchar(20) DEFAULT NULL,
-  `door_no` varchar(50) DEFAULT NULL,
-  `street_name` text,
-  `city` varchar(200) DEFAULT NULL,
-  `district` varchar(100) DEFAULT NULL,
-  `state` varchar(100) DEFAULT NULL,
-  `pin_code` int(11) DEFAULT NULL,
-  `same_address` enum('yes','no') DEFAULT NULL,
-  `permanent_door_no` varchar(50) DEFAULT NULL,
-  `permanent_street_name` text,
-  `permanent_city` varchar(200) DEFAULT NULL,
-  `permanent_district` varchar(100) DEFAULT NULL,
-  `permanent_state` varchar(100) DEFAULT NULL,
-  `permanent_pin_code` int(11) DEFAULT NULL,
-  `house` enum('own','rent') DEFAULT NULL,
-  `email_id` varchar(255) DEFAULT NULL,
-  `company` text,
-  `branch` varchar(250) DEFAULT NULL,
-  `account_status` varchar(50) DEFAULT NULL,
-  `reason` text,
-  `activation_date` datetime DEFAULT NULL,
-  `deactivation_date` datetime DEFAULT NULL,
-  `shifting_date` datetime DEFAULT NULL,
-  `rejoint_date` datetime DEFAULT NULL,
-  `tariff` varchar(50) DEFAULT NULL,
-  `advance` int(11) DEFAULT NULL,
-  `balance` int(11) DEFAULT NULL,
-  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
-  `processed_on` datetime DEFAULT NULL,
-  `status` enum('pending','uploaded','failed','reprocess') DEFAULT 'pending',
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
-
-	*/
-	
-	
-	$ins_udump = $db->executeQuery("INSERT INTO user_import_dump (mobilenumber, senderid, dlr_required) VALUES ('".$mobilenumber."', '".$senderId."', 'yes') ");
-	$udump_id = $db->getLastInsertId();
+		//echo $ins_query."<br>";
+		$ins_udump = $db->executeQuery($ins_query);
+		$udump_id = $db->getLastInsertId();
+	}
 	
 	/*echo '<pre>';print_r($data);
     for ($c=0; $c < $num; $c++) {
