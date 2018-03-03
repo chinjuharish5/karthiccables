@@ -1,3 +1,45 @@
+<?php
+require_once('framework/database/init.php');
+
+global $db;
+
+$error_msg = $success_msg = '';
+$tariff_id = '';
+if(isset($_GET['tid'])) {
+	$tariff_id = $_GET['tid'];
+	$select_query = "SELECT * from tariff_list where status='active' AND tariff_id='".$tariff_id."'; ";
+	$query_data = $db->fetchQuery($select_query);
+	
+	if(empty($query_data)) {
+		$error_msg = 'No data found for this ID';
+	}
+}
+
+if(isset($_POST["submit"])) {
+	
+	$tariff = strtolower($_POST["tariff"]);	
+	$amount = $_POST["amount"];	
+	$months = $_POST["months"];	
+	
+	if($tariff!='' && $amount!='') {
+		if(!empty($query_data) && $tariff_id!='') {
+			$ins_data = $db->executeQuery("UPDATE tariff_list SET tariff='".$tariff."', amount='".$amount."', months='".$months."' WHERE tariff_id='".$tariff_id."' ");
+			//$tariff_id = $db->getLastInsertId();						
+		} else {
+			$ins_data = $db->executeQuery("INSERT INTO tariff_list (tariff, amount, months) VALUES ('".$tariff."', '".$amount."', '".$months."') ");
+			$tariff_id = $db->getLastInsertId();			
+		}
+		
+		if($tariff_id!= '') {
+			$success_msg = 'Tariff Details updated successfully !!!';
+		} else {
+			$error_msg = 'Unexpected Error. Please try again.';
+		}
+	} else {
+		$error_msg = 'Tariff Name cannot be empty !!!';
+	}
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -62,6 +104,20 @@
             <!-- Begin: Content -->
             <section id="content" class="animated fadeIn">
 
+				<!-- Success / Error Message -->
+				<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="fa fa-check pr10"></i>
+					<strong>Success !</strong> <?php echo $success_msg; ?>
+				</div>
+				
+				<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="fa fa-remove pr10"></i>
+					<strong>Oops !</strong> <?php echo $error_msg; ?>
+				</div>			
+				<!-- Success / Error Message End -->				
+			
                 <h2 class="lh30 mt15 text-center">Add New <b class="text-primary">Tariff</b></h2>
                
                 <div class="row">
@@ -73,7 +129,7 @@
 
                             <div class="panel">
                 
-                                <form method="post" action="/" id="admin-form">
+                                <form method="post" id="admin-form">
                                     <div class="panel-body">
                                     
                                         <div class="section-divider mb40 mt20"><span> Add New Tariff </span></div><!-- .section-divider -->
@@ -81,36 +137,37 @@
                                         <div class="section row">
                                             <div class="col-md-12">
                                                 <label for="tariff" class="field prepend-icon">
-                                                    <input type="text" name="tariff" id="tariff" class="gui-input" placeholder="Enter the tariff...">
+                                                    <input type="text" name="tariff" id="tariff" class="gui-input" placeholder="Enter the tariff..." value="<?php echo isset($query_data[0]['tariff']) ? strtoupper($query_data[0]['tariff']) : '';?>">
                                                     <label for="tariff" class="field-icon"><i class="fa fa-user"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
                                             
                                         </div><!-- end .section row section --> 
-                                                    
+										
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="amount" class="field prepend-icon">
+                                                    <input type="text" name="amount" id="amount" class="gui-input" placeholder="Enter the amount..." value="<?php echo isset($query_data[0]['amount']) ? strtoupper($query_data[0]['amount']) : '';?>">
+                                                    <label for="amount" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                            
+                                        </div><!-- end .section row section --> 
 
-                                        <div class="section">
-                                            <label class="field select">
-                                                <select id="amount" name="amount">
-                                                    <option value="">Select tariff...</option>   
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->    
-  
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="months" name="months">
-                                                    <option value="">Select tariff...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->           
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="months" class="field prepend-icon">
+                                                    <input type="text" name="months" id="months" class="gui-input" placeholder="Enter the months..." value="<?php echo isset($query_data[0]['months']) ? strtoupper($query_data[0]['months']) : '';?>">
+                                                    <label for="months" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                            
+                                        </div><!-- end .section row section --> 										
 
                                     </div><!-- end .form-body section -->
                                     <div class="panel-footer text-right">
-                                        <button type="submit" name="submit" value="submit" class="button btn-primary"> save tariff </button>
-                                        <button type="reset" class="button"> Cancel </button>
+                                        <button type="submit" name="submit" value="submit" class="button btn-primary"> Save tariff </button>
+                                        <a href="tariff_listing.php"><button type="button" class="button"> Cancel </button></a>
                                     </div><!-- end .form-footer section -->
                                 </form>
 
