@@ -2,7 +2,7 @@
 require_once('framework/database/init.php');
 
 global $db;
-$select_query = "SELECT * from area where status='active'; ";
+$select_query = "SELECT * from user_list where status='active'; ";
 $query_data = $db->fetchQuery($select_query);
 ?>
 <!DOCTYPE html>
@@ -78,31 +78,68 @@ $query_data = $db->fetchQuery($select_query);
                     <div class="row">
 						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
-							<a href="add-area.php"><button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Area</button></a>
+							<button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Users</button>
 						</div>
 						
                         <div class="col-md-12">
                             <div class="panel panel-visible" id="spy2">
                                 <div class="panel-heading">
                                     <div class="panel-title hidden-xs">
-                                        <span class="glyphicon glyphicon-tasks"></span>Area Details</div>
+                                        <span class="glyphicon glyphicon-tasks"></span>User Details</div>
                                 </div>
                                 <div class="panel-body pn">
                                     <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-												<th>S No</th>
-                                                <th>Area Code</th>
+					        <th>S No</th>
+                                                <th>Kctv Id</th>
+                                                <th>Caf Id</th>
+                                                <th>Ca Id</th>
+                                                <th>Tactv Id</th>
+                                                <th>Eb Sc Number</th>
+                                                <th>User Name</th>
+                                                <th>Mobile Number</th>
+                                                <th>Email Id</th>
                                                 <th>Area</th>
+                                                <th>Door Number</th>
+                                                <th>Street Name</th>
+                                                <th>House Type</th>
+                                                <th>Account Status</th>
+                                                <th>Installation Date</th>
+                                                <th>Activation Date</th>
+                                                <th>Tariff</th>
+                                                <th>Advance</th>
+                                                <th>Balance</th>
+                                                <th>Status</th>
+                                                <th>Added On</th>
                                                 <th>Action</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
 											<?php $count = 1; foreach($query_data as $data) { ?>
 												<tr>
 													<td><?php echo $count; ?></td>
-													<td><?php echo $data['area_code'];?></td>
-													<td><?php echo strtoupper($data['area']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['kctv_id']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['caf_id']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['ca_id']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['tactv_id']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['eb_sc_no']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['user_name']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['mobile_number']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['email_id']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['area']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['door_no']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['streat_name']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['house_type']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['acc_status']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['installation_date']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['actiation_date']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['tariff']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['advance']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['balance']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['status']);?></td>
+                                                                                                        <td><?php echo date('Y-m-d H:i:s', $data['added_on']);?></td>
 													<td> Edit  | Delete </td>
 												</tr>
 											<?php $count++;} ?>

@@ -2,7 +2,7 @@
 require_once('framework/database/init.php');
 
 global $db;
-$select_query = "SELECT * from area where status='active'; ";
+$select_query = "SELECT * from tariff_list where status='active'; ";
 $query_data = $db->fetchQuery($select_query);
 ?>
 <!DOCTYPE html>
@@ -78,22 +78,24 @@ $query_data = $db->fetchQuery($select_query);
                     <div class="row">
 						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
-							<a href="add-area.php"><button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Area</button></a>
+							<button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Tariff</button>
 						</div>
 						
                         <div class="col-md-12">
                             <div class="panel panel-visible" id="spy2">
                                 <div class="panel-heading">
                                     <div class="panel-title hidden-xs">
-                                        <span class="glyphicon glyphicon-tasks"></span>Area Details</div>
+                                        <span class="glyphicon glyphicon-tasks"></span>Tariff Details</div>
                                 </div>
                                 <div class="panel-body pn">
                                     <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-												<th>S No</th>
-                                                <th>Area Code</th>
-                                                <th>Area</th>
+					        <th>S No</th>
+                                                <th>Tariff</th>
+                                                <th>Amount</th>
+                                                <th>Months</th>
+                                                <th>Added On</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -101,8 +103,10 @@ $query_data = $db->fetchQuery($select_query);
 											<?php $count = 1; foreach($query_data as $data) { ?>
 												<tr>
 													<td><?php echo $count; ?></td>
-													<td><?php echo $data['area_code'];?></td>
-													<td><?php echo strtoupper($data['area']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['tariff']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['amount']);?></td>
+                                                                                                        <td><?php echo strtoupper($data['months']);?></td>
+                                                                                                        <td><?php echo date('Y-m-d H:i:s', $data['added_on']);?></td>
 													<td> Edit  | Delete </td>
 												</tr>
 											<?php $count++;} ?>

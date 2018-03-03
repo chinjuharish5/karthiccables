@@ -1,0 +1,249 @@
+/*
+SQLyog Ultimate v8.54 
+MySQL - 5.5.5-10.1.13-MariaDB : Database - karthic_cables
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`karthic_cables` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `karthic_cables`;
+
+/*Table structure for table `area` */
+
+DROP TABLE IF EXISTS `area`;
+
+CREATE TABLE `area` (
+  `area_id` int(11) NOT NULL AUTO_INCREMENT,
+  `area_code` varchar(10) DEFAULT NULL,
+  `area` varchar(250) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`area_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `city_list` */
+
+DROP TABLE IF EXISTS `city_list`;
+
+CREATE TABLE `city_list` (
+  `city_id` int(11) NOT NULL AUTO_INCREMENT,
+  `city` varchar(100) DEFAULT NULL,
+  `pincode` int(11) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `dist_id` int(11) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`city_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `company_list` */
+
+DROP TABLE IF EXISTS `company_list`;
+
+CREATE TABLE `company_list` (
+  `company_id` int(11) NOT NULL AUTO_INCREMENT,
+  `company_name` text,
+  `branch` varchar(250) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`company_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `district_list` */
+
+DROP TABLE IF EXISTS `district_list`;
+
+CREATE TABLE `district_list` (
+  `dist_id` int(11) NOT NULL AUTO_INCREMENT,
+  `district` varchar(100) DEFAULT NULL,
+  `state_id` int(11) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`dist_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `reason_list` */
+
+DROP TABLE IF EXISTS `reason_list`;
+
+CREATE TABLE `reason_list` (
+  `reason_id` int(11) NOT NULL AUTO_INCREMENT,
+  `reason` varchar(250) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`reason_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `sms_error_codes` */
+
+DROP TABLE IF EXISTS `sms_error_codes`;
+
+CREATE TABLE `sms_error_codes` (
+  `eid` int(11) NOT NULL AUTO_INCREMENT,
+  `error_code` varchar(10) DEFAULT NULL,
+  `error_msg` varchar(255) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `createdOn` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`eid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `sms_track` */
+
+DROP TABLE IF EXISTS `sms_track`;
+
+CREATE TABLE `sms_track` (
+  `smsid` int(11) NOT NULL AUTO_INCREMENT,
+  `mobilenumber` varchar(15) DEFAULT NULL,
+  `senderid` varchar(10) DEFAULT NULL,
+  `status` enum('sent','failed','waiting') DEFAULT 'waiting',
+  `returnCode` varchar(10) DEFAULT NULL,
+  `messageID` text,
+  `recordDate` datetime DEFAULT CURRENT_TIMESTAMP,
+  `dlr_required` enum('yes','no') DEFAULT 'no',
+  `dlr_received_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`smsid`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `state_list` */
+
+DROP TABLE IF EXISTS `state_list`;
+
+CREATE TABLE `state_list` (
+  `state_id` int(11) NOT NULL AUTO_INCREMENT,
+  `state_name` varchar(100) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`state_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `tariff_list` */
+
+DROP TABLE IF EXISTS `tariff_list`;
+
+CREATE TABLE `tariff_list` (
+  `tariff_id` int(11) NOT NULL AUTO_INCREMENT,
+  `tariff` varchar(250) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL,
+  `months` int(11) DEFAULT '1',
+  `status` enum('active','inactive') DEFAULT 'active',
+  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`tariff_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `user_import_dump` */
+
+DROP TABLE IF EXISTS `user_import_dump`;
+
+CREATE TABLE `user_import_dump` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `kctv_id` varchar(50) DEFAULT NULL,
+  `caf_id` varchar(50) DEFAULT NULL,
+  `ca_id` varchar(50) DEFAULT NULL,
+  `tactv_customer_id` varchar(50) DEFAULT NULL,
+  `eb_sc_no` varchar(50) DEFAULT NULL,
+  `customer_name` varchar(250) DEFAULT NULL,
+  `area_code` varchar(10) DEFAULT NULL,
+  `area` text,
+  `mobile_number` varchar(20) DEFAULT NULL,
+  `alternate_number` varchar(20) DEFAULT NULL,
+  `door_no` varchar(50) DEFAULT NULL,
+  `street_name` text,
+  `city` varchar(200) DEFAULT NULL,
+  `district` varchar(100) DEFAULT NULL,
+  `state` varchar(100) DEFAULT NULL,
+  `pin_code` int(11) DEFAULT NULL,
+  `same_address` enum('yes','no') DEFAULT NULL,
+  `permanent_door_no` varchar(50) DEFAULT NULL,
+  `permanent_street_name` text,
+  `permanent_city` varchar(200) DEFAULT NULL,
+  `permanent_district` varchar(100) DEFAULT NULL,
+  `permanent_state` varchar(100) DEFAULT NULL,
+  `permanent_pin_code` int(11) DEFAULT NULL,
+  `house` enum('own','rent') DEFAULT NULL,
+  `email_id` varchar(255) DEFAULT NULL,
+  `company` text,
+  `branch` varchar(250) DEFAULT NULL,
+  `account_status` varchar(50) DEFAULT NULL,
+  `reason` text,
+  `installation_date` datetime DEFAULT NULL,
+  `activation_date` datetime DEFAULT NULL,
+  `deactivation_date` datetime DEFAULT NULL,
+  `shifting_date` datetime DEFAULT NULL,
+  `rejoint_date` datetime DEFAULT NULL,
+  `tariff` varchar(50) DEFAULT NULL,
+  `advance` int(11) DEFAULT NULL,
+  `balance` int(11) DEFAULT NULL,
+  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `processed_on` datetime DEFAULT NULL,
+  `status` enum('pending','uploaded','failed','reprocess') DEFAULT 'pending',
+  `response` varchar(250) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `user_list` */
+
+DROP TABLE IF EXISTS `user_list`;
+
+CREATE TABLE `user_list` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `kctv_id` varchar(50) DEFAULT NULL,
+  `caf_id` varchar(50) DEFAULT NULL,
+  `ca_id` varchar(50) DEFAULT NULL,
+  `tactv_id` varchar(50) DEFAULT NULL,
+  `eb_sc_no` varchar(50) DEFAULT NULL,
+  `user_name` varchar(250) DEFAULT NULL,
+  `user_type` enum('customer','admin','staff') DEFAULT 'customer',
+  `password` varchar(250) DEFAULT NULL,
+  `mobile_number` varchar(20) DEFAULT NULL,
+  `alternate_number` varchar(20) DEFAULT NULL,
+  `email_id` varchar(200) DEFAULT NULL,
+  `area_id` int(11) DEFAULT NULL COMMENT 'From Area Table',
+  `door_no` varchar(20) DEFAULT NULL,
+  `street_name` varchar(250) DEFAULT NULL,
+  `city_id` int(11) DEFAULT NULL COMMENT 'From City Table',
+  `dist_id` int(11) DEFAULT NULL COMMENT 'From District Table',
+  `state_id` int(11) DEFAULT NULL COMMENT 'From State Table',
+  `same_address` enum('yes','no') DEFAULT 'no',
+  `p_door_no` varchar(20) DEFAULT NULL,
+  `p_street_name` varchar(250) DEFAULT NULL,
+  `p_city_id` int(11) DEFAULT NULL COMMENT 'From City Table',
+  `p_dist_id` int(11) DEFAULT NULL COMMENT 'From District Table',
+  `p_state_id` int(11) DEFAULT NULL COMMENT 'From State Table',
+  `house_type` enum('own','rent') DEFAULT 'own',
+  `company_id` int(11) DEFAULT NULL COMMENT 'From Company Table',
+  `acc_status` enum('active','inactive','deleted','hold') DEFAULT 'active',
+  `reason_id` int(11) DEFAULT NULL COMMENT 'From Reason Table',
+  `installation_date` datetime DEFAULT NULL,
+  `activation_date` datetime DEFAULT NULL,
+  `deactivation_date` datetime DEFAULT NULL,
+  `shifting_date` datetime DEFAULT NULL,
+  `rejoint_date` datetime DEFAULT NULL,
+  `tariff_id` int(11) DEFAULT NULL COMMENT 'From Tariff Table',
+  `advance` int(11) DEFAULT '0',
+  `balance` int(11) DEFAULT '0',
+  `status` enum('active','inactive') DEFAULT 'active',
+  `added_on` datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
