@@ -1,3 +1,43 @@
+<?php
+require_once('framework/database/init.php');
+
+global $db;
+
+$error_msg = $success_msg = '';
+$reason_id = '';
+if(isset($_GET['rid'])) {
+	$reason_id = $_GET['rid'];
+	$select_query = "SELECT * from reason_list where status='active' AND reason_id='".$reason_id."'; ";
+	$query_data = $db->fetchQuery($select_query);
+	
+	if(empty($query_data)) {
+		$error_msg = 'No data found for this ID';
+	}
+}
+
+if(isset($_POST["submit"])) {
+	
+	$reason = strtolower($_POST["reason"]);	
+	
+	if($reason!='') {
+		if(!empty($query_data) && $reason_id!='') {
+			$ins_data = $db->executeQuery("UPDATE reason_list SET reason='".$reason."' WHERE reason_id='".$reason_id."' ");
+			//$reason_id = $db->getLastInsertId();						
+		} else {
+			$ins_data = $db->executeQuery("INSERT INTO reason_list (reason) VALUES ('".$reason."') ");
+			$reason_id = $db->getLastInsertId();			
+		}
+		
+		if($reason_id!= '') {
+			$success_msg = 'Reason Details updated successfully !!!';
+		} else {
+			$error_msg = 'Unexpected Error. Please try again.';
+		}
+	} else {
+		$error_msg = 'Reason Name cannot be empty !!!';
+	}
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -62,6 +102,20 @@
             <!-- Begin: Content -->
             <section id="content" class="animated fadeIn">
 
+				<!-- Success / Error Message -->
+				<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="fa fa-check pr10"></i>
+					<strong>Success !</strong> <?php echo $success_msg; ?>
+				</div>
+				
+				<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="fa fa-remove pr10"></i>
+					<strong>Oops !</strong> <?php echo $error_msg; ?>
+				</div>			
+				<!-- Success / Error Message End -->				
+			
                 <h2 class="lh30 mt15 text-center">Add New <b class="text-primary">Reason</b></h2>
                 
                 <div class="row">
@@ -73,7 +127,7 @@
 
                             <div class="panel">
                 
-                                <form method="post" action="/" id="admin-form">
+                                <form method="post" id="admin-form">
                                     <div class="panel-body">
                                     
                                         <div class="section-divider mb40 mt20"><span> Add New Reason </span></div><!-- .section-divider -->
@@ -81,7 +135,7 @@
                                         <div class="section row">
                                             <div class="col-md-12">
                                                 <label for="reason" class="field prepend-icon">
-                                                    <input type="text" name="reason" id="reason" class="gui-input" placeholder="Enter the reason...">
+                                                    <input type="text" name="reason" id="reason" class="gui-input" placeholder="Enter the reason..." value="<?php echo isset($query_data[0]['reason']) ? strtoupper($query_data[0]['reason']) : '';?>">
                                                     <label for="reason" class="field-icon"><i class="fa fa-user"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
@@ -92,7 +146,7 @@
                                    
                                     <div class="panel-footer text-right">
                                         <button type="submit" name="submit" value="submit" class="button btn-primary"> save reason </button>
-                                        <button type="reset" class="button"> Cancel </button>
+                                        <a href="reason_listing.php"><button type="button" class="button"> Cancel </button></a>
                                     </div><!-- end .form-footer section -->
                                 </form>
 
