@@ -2,6 +2,29 @@
 require_once('framework/database/init.php');
 
 global $db;
+
+// Delete State
+$error_msg = $success_msg = '';
+if(isset($_GET['sid']) && isset($_GET['type'])) {
+	$state_id = $_GET['sid'];
+	
+	$select_query = "SELECT state_id, state_name from state_list where status='active' AND state_id='".$state_id."'; ";
+	$query_data = $db->fetchQuery($select_query);
+	
+	if(empty($query_data)) {
+		$error_msg = 'No data found for this ID';
+	} else {		
+		$del_query = "UPDATE state_list SET status='inactive' where STATUS='active' AND state_id='".$state_id."'; ";
+		$del_data = $db->executeQuery($del_query);
+		
+		if($del_data) {
+			$success_msg = 'State Deleted Successfully';
+		} else {
+			$error_msg = 'Please try again';
+		}
+	}
+}
+
 $select_query = "SELECT * from state_list where status='active'; ";
 $query_data = $db->fetchQuery($select_query);
 ?>
@@ -77,8 +100,22 @@ $query_data = $db->fetchQuery($select_query);
 
                     <div class="row">
 						
+						<!-- Success / Error Message -->
+						<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-check pr10"></i>
+							<strong>Success !</strong> <?php echo $success_msg; ?>
+						</div>
+						
+						<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-remove pr10"></i>
+							<strong>Oops !</strong> <?php echo $error_msg; ?>
+						</div>			
+						<!-- Success / Error Message End -->						
+						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
-							<button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New State</button>
+							<a href="add-state.php"><button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New State</button></a>
 						</div>
 						
                         <div class="col-md-12">
@@ -91,20 +128,19 @@ $query_data = $db->fetchQuery($select_query);
                                     <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-						<th>S No</th>
+												<th>S No</th>
                                                 <th>State</th>
                                                 <th>Added On</th>
                                                 <th>Action</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
 											<?php $count = 1; foreach($query_data as $data) { ?>
 												<tr>
 													<td><?php echo $count; ?></td>
-												        <td><?php echo strtoupper($data['state_name']);?></td>
-                                                                                                        <td><?php echo date('Y-m-d H:i:s', $data['added_on']);?></td>
-													<td> Edit  | Delete </td>
+													<td><?php echo strtoupper($data['state_name']);?></td>
+													<td><?php echo $data['added_on'];?></td>
+													<td> <a href="add-state.php?sid=<?php echo $data['state_id'];?>">Edit</a>  | <a href="state_listing.php?sid=<?php echo $data['state_id'];?>&type=delete" onclick="return confirm('Are you sure you want to Delete ?')">Delete</a> </td>
 												</tr>
 											<?php $count++;} ?>
                                         </tbody>

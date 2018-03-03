@@ -7,13 +7,21 @@ global $db;
 $error_msg = $success_msg = '';
 if(isset($_GET['aid']) && isset($_GET['type'])) {
 	$area_id = $_GET['aid'];
-	$del_query = "UPDATE area SET status='inactive' where STATUS='active' AND area_id='".$area_id."'; ";
-	$del_data = $db->executeQuery($del_query);
 	
-	if($del_data) {
-		$success_msg = 'Area Deleted Successfully';
+	$select_query = "SELECT area_id,area_code,area from area where status='active' AND area_id='".$area_id."'; ";
+	$query_data = $db->fetchQuery($select_query);
+	
+	if(empty($query_data)) {
+		$error_msg = 'No data found for this ID';
 	} else {
-		$error_msg = 'Please try again';
+		$del_query = "UPDATE area SET status='inactive' where STATUS='active' AND area_id='".$area_id."'; ";
+		$del_data = $db->executeQuery($del_query);
+
+		if($del_data) {
+			$success_msg = 'Area Deleted Successfully';
+		} else {
+			$error_msg = 'Please try again';
+		}
 	}
 }
 

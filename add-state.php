@@ -1,3 +1,43 @@
+<?php
+require_once('framework/database/init.php');
+
+global $db;
+
+$error_msg = $success_msg = '';
+$state_id = '';
+if(isset($_GET['sid'])) {
+	$state_id = $_GET['sid'];
+	$select_query = "SELECT state_id, state_name from state_list where status='active' AND state_id='".$state_id."'; ";
+	$query_data = $db->fetchQuery($select_query);
+	
+	if(empty($query_data)) {
+		$error_msg = 'No data found for this ID';
+	}
+}
+
+if(isset($_POST["submit"])) {
+	
+	$state_name = strtolower($_POST["state_name"]);	
+	
+	if($state_name!='') {
+		if(!empty($query_data) && $state_id!='') {
+			$ins_data = $db->executeQuery("UPDATE state_list SET state_name='".$state_name."' WHERE state_id='".$state_id."' ");
+			//$state_id = $db->getLastInsertId();						
+		} else {
+			$ins_data = $db->executeQuery("INSERT INTO state_list (state_name) VALUES ('".$state_name."') ");
+			$state_id = $db->getLastInsertId();			
+		}
+		
+		if($state_id!= '') {
+			$success_msg = 'State Details updated successfully !!!';
+		} else {
+			$error_msg = 'Unexpected Error. Please try again.';
+		}
+	} else {
+		$error_msg = 'State Name cannot be empty !!!';
+	}
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -61,6 +101,20 @@
 
             <!-- Begin: Content -->
             <section id="content" class="animated fadeIn">
+			
+				<!-- Success / Error Message -->
+				<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="fa fa-check pr10"></i>
+					<strong>Success !</strong> <?php echo $success_msg; ?>
+				</div>
+				
+				<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="fa fa-remove pr10"></i>
+					<strong>Oops !</strong> <?php echo $error_msg; ?>
+				</div>			
+				<!-- Success / Error Message End -->					
 
                 <h2 class="lh30 mt15 text-center">Add New <b class="text-primary">State</b></h2>
                 
@@ -73,7 +127,7 @@
 
                             <div class="panel">
                 
-                                <form method="post" action="/" id="admin-form">
+                                <form method="post" id="admin-form">
                                     <div class="panel-body">
                                     
                                         <div class="section-divider mb40 mt20"><span> Add New State </span></div><!-- .section-divider -->
@@ -81,7 +135,7 @@
                                         <div class="section row">
                                             <div class="col-md-12">
                                                 <label for="state_name" class="field prepend-icon">
-                                                    <input type="text" name="state_name" id="state_name" class="gui-input" placeholder="Enter State Name...">
+                                                    <input type="text" name="state_name" id="state_name" class="gui-input" placeholder="Enter State Name..." value="<?php echo isset($query_data[0]['state_name']) ? strtoupper($query_data[0]['state_name']) : '';?>">
                                                     <label for="state_name" class="field-icon"><i class="fa fa-user"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
@@ -91,8 +145,8 @@
                                              
                                    
                                     <div class="panel-footer text-right">
-                                        <button type="submit" name="submit" value="submit" class="button btn-primary"> save state </button>
-                                        <button type="reset" class="button"> Cancel </button>
+                                        <button type="submit" name="submit" value="submit" class="button btn-primary"> Save State </button>
+                                        <a href="state_listing.php"><button type="button" class="button"> Cancel </button></a>
                                     </div><!-- end .form-footer section -->
                                 </form>
 
