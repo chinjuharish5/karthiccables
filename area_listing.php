@@ -2,6 +2,21 @@
 require_once('framework/database/init.php');
 
 global $db;
+
+// Delete Area
+$error_msg = $success_msg = '';
+if(isset($_GET['aid']) && isset($_GET['type'])) {
+	$area_id = $_GET['aid'];
+	$del_query = "UPDATE area SET status='inactive' where STATUS='active' AND area_id='".$area_id."'; ";
+	$del_data = $db->executeQuery($del_query);
+	
+	if($del_data) {
+		$success_msg = 'Area Deleted Successfully';
+	} else {
+		$error_msg = 'Please try again';
+	}
+}
+
 $select_query = "SELECT * from area where status='active'; ";
 $query_data = $db->fetchQuery($select_query);
 ?>
@@ -71,11 +86,24 @@ $query_data = $db->fetchQuery($select_query);
 
             <!-- Begin: Content -->
             <section id="content" class="table-layout animated fadeIn">
-
+		
                 <!-- begin: .tray-center -->
                 <div class="tray tray-center p40 va-t posr">
 
                     <div class="row">
+						<!-- Success / Error Message -->
+						<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-check pr10"></i>
+							<strong>Success !</strong> <?php echo $success_msg; ?>
+						</div>
+						
+						<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-remove pr10"></i>
+							<strong>Oops !</strong> <?php echo $error_msg; ?>
+						</div>			
+						<!-- Success / Error Message End -->
 						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
 							<a href="add-area.php"><button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Area</button></a>
@@ -103,7 +131,7 @@ $query_data = $db->fetchQuery($select_query);
 													<td><?php echo $count; ?></td>
 													<td><?php echo $data['area_code'];?></td>
 													<td><?php echo strtoupper($data['area']);?></td>
-													<td> Edit  | Delete </td>
+													<td> <a href="add-area.php?aid=<?php echo $data['area_id'];?>">Edit</a>  | <a href="area_listing.php?aid=<?php echo $data['area_id'];?>&type=delete" onclick="return confirm('Are you sure you want to Delete ?')">Delete</a> </td>
 												</tr>
 											<?php $count++;} ?>
                                         </tbody>

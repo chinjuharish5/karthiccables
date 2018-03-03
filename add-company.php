@@ -1,44 +1,3 @@
-<?php
-require_once('framework/database/init.php');
-
-global $db;
-
-$error_msg = $success_msg = '';
-$area_id = '';
-if(isset($_GET['aid'])) {
-	$area_id = $_GET['aid'];
-	$select_query = "SELECT area_id,area_code,area from area where status='active' AND area_id='".$area_id."'; ";
-	$query_data = $db->fetchQuery($select_query);
-	
-	if(empty($query_data)) {
-		$error_msg = 'No data found for this ID';
-	}
-}
-
-if(isset($_POST["submit"])) {
-	
-	$area_code = $_POST["area_code"];
-	$area = strtolower($_POST["area"]);	
-	
-	if($area_code!='' && $area!='') {
-		if(!empty($query_data) && $area_id!='') {
-			$ins_data = $db->executeQuery("UPDATE area SET area_code='".$area_code."', area='".$area."' WHERE area_id='".$area_id."' ");
-			//$area_id = $db->getLastInsertId();						
-		} else {
-			$ins_data = $db->executeQuery("INSERT INTO area (area_code, area) VALUES ('".$area_code."', '".$area."') ");
-			$area_id = $db->getLastInsertId();			
-		}
-		
-		if($area_id!= '') {
-			$success_msg = 'Area Details updated successfully !!!';
-		} else {
-			$error_msg = 'Unexpected Error. Please try again.';
-		}
-	} else {
-		$error_msg = 'Area code / Area Name cannot be empty !!!';
-	}
-}
-?>
 <!DOCTYPE html>
 <html>
 
@@ -102,23 +61,9 @@ if(isset($_POST["submit"])) {
 
             <!-- Begin: Content -->
             <section id="content" class="animated fadeIn">
-			
-				<!-- Success / Error Message -->
-				<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<i class="fa fa-check pr10"></i>
-					<strong>Success !</strong> <?php echo $success_msg; ?>
-				</div>
-				
-				<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-					<i class="fa fa-remove pr10"></i>
-					<strong>Oops !</strong> <?php echo $error_msg; ?>
-				</div>			
-				<!-- Success / Error Message End -->
 
-                <h2 class="lh30 mt15 text-center">Add new <b class="text-primary">Area</b></h2>
-
+                <h2 class="lh30 mt15 text-center">Add New <b class="text-primary">Company</b></h2>
+               
                 <div class="row">
                     <div class="col-md-9 center-block">
 
@@ -128,34 +73,36 @@ if(isset($_POST["submit"])) {
 
                             <div class="panel">
                 
-                                <form method="post" id="admin-form">
+                                <form method="post" action="/" id="admin-form">
                                     <div class="panel-body">
                                     
-                                        <div class="section-divider mb40 mt20"><span> Add New Area </span></div><!-- .section-divider -->
+                                        <div class="section-divider mb40 mt20"><span> Add New Company </span></div><!-- .section-divider -->
                                         
                                         <div class="section row">
                                             <div class="col-md-12">
-                                                <label for="area_code" class="field prepend-icon">
-                                                    <input type="text" name="area_code" id="area_code" class="gui-input" placeholder="Enter the Area Code.." value="<?php echo isset($query_data[0]['area_code']) ? $query_data[0]['area_code'] : '';?>" >
-                                                    <label for="area_code" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                <label for="company" class="field prepend-icon">
+                                                    <input type="text" name="company" id="company" class="gui-input" placeholder="Enter the company name...">
+                                                    <label for="company" class="field-icon"><i class="fa fa-user"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
                                             
                                         </div><!-- end .section row section --> 
-										
-                                        <div class="section row">
-                                            <div class="col-md-12">
-                                                <label for="area" class="field prepend-icon">
-                                                    <input type="text" name="area" id="area" class="gui-input" placeholder="Enter the Area Name.." value="<?php echo isset($query_data[0]['area']) ? strtoupper($query_data[0]['area']) : '';?>" >
-                                                    <label for="area" class="field-icon"><i class="fa fa-user"></i></label>  
-                                                </label>
-                                            </div><!-- end section -->
-                                        </div><!-- end .section row section --> 										               
-										
+   
+  
+                                      <div class="section">
+                                            <label class="field select">
+                                                <select id="branch" name="branch">
+                                                    <option value="">Select Company...</option>
+                                                </select>
+                                                <i class="arrow double"></i>                    
+                                            </label>  
+                                        </div><!-- end section -->           
+
+               
                                     </div><!-- end .form-body section -->
                                     <div class="panel-footer text-right">
-                                        <button type="submit" name="submit" value="submit" class="button btn-primary"> Save Area </button>
-                                        <a href="area_listing.php"><button type="button" class="button"> Cancel </button></a>
+                                        <button type="submit" name="submit" value="submit" class="button btn-primary"> save company </button>
+                                        <button type="reset" class="button"> Cancel </button>
                                     </div><!-- end .form-footer section -->
                                 </form>
 
@@ -240,28 +187,26 @@ if(isset($_POST["submit"])) {
                     ------------------------------------------ */
                         
                     rules: {
-                            area_code: {
+                            company: {
                                     required: true
                             },
-							
-							area: {
+                            branch: {
                                     required: true
-                            },
-                        
+                            },                  
+                            
                     },
                     
                     /* @validation error messages 
                     ---------------------------------------------- */
                         
                     messages:{
-                            area_code: {
-                                    required: 'Enter the Area Code'
-                            },    
-							
-                            area: {
-                                    required: 'Enter the Area name'
-                            },    							
-                     
+                            company: {
+                                    required: 'Enter the company name'
+                            },
+                            branch: {
+                                    required: 'Select Branch'
+                            },                  
+
                     },
 
                     /* @validation highlighting + error placement  

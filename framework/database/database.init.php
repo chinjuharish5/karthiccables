@@ -56,4 +56,8 @@ class Database {
 	public function getLastInsertId() {
 		return @mysqli_insert_id($this->connection);
 	}
+	
+	public function getAffectedRows() {
+		return @mysqli_affected_rows();
+	}
 }
