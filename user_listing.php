@@ -2,7 +2,30 @@
 require_once('framework/database/init.php');
 
 global $db;
-$select_query = "SELECT * from user_list where status='active'; ";
+
+// Delete User
+$error_msg = $success_msg = '';
+if(isset($_GET['uid']) && isset($_GET['type'])) {
+	$user_id = $_GET['uid'];
+	
+	$select_query = "SELECT * from user_list where status='active' AND user_id='".$user_id."'; ";
+	$query_data = $db->fetchQuery($select_query);
+	
+	if(empty($query_data)) {
+		$error_msg = 'No data found for this ID';
+	} else {		
+		$del_query = "UPDATE user_list SET status='inactive' where STATUS='active' AND user_id='".$user_id."'; ";
+		$del_data = $db->executeQuery($del_query);
+		
+		if($del_data) {
+			$success_msg = 'User Deleted Successfully';
+		} else {
+			$error_msg = 'Please try again';
+		}
+	}
+}
+
+$select_query = "SELECT u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.user_name, u.mobile_number, u.email_id, u.door_no, u.street_name, u.area_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date,  a.area FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id WHERE u.status='active' AND a.status='active' AND t.status='active'; ";
 $query_data = $db->fetchQuery($select_query);
 ?>
 <!DOCTYPE html>
@@ -76,9 +99,23 @@ $query_data = $db->fetchQuery($select_query);
                 <div class="tray tray-center p40 va-t posr">
 
                     <div class="row">
+					
+						<!-- Success / Error Message -->
+						<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-check pr10"></i>
+							<strong>Success !</strong> <?php echo $success_msg; ?>
+						</div>
+						
+						<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-remove pr10"></i>
+							<strong>Oops !</strong> <?php echo $error_msg; ?>
+						</div>			
+						<!-- Success / Error Message End -->						
 						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
-							<button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Users</button>
+							<a href="add-user.php"><button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Users</button></a>
 						</div>
 						
                         <div class="col-md-12">
@@ -91,27 +128,26 @@ $query_data = $db->fetchQuery($select_query);
                                     <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-					        <th>S No</th>
+												<th>S No</th>
                                                 <th>Kctv Id</th>
                                                 <th>Caf Id</th>
                                                 <th>Ca Id</th>
                                                 <th>Tactv Id</th>
-                                                <th>Eb Sc Number</th>
-                                                <th>User Name</th>
+                                                <!--<th>Eb Sc Number</th>-->
+                                                <th>Customer Name</th>
                                                 <th>Mobile Number</th>
-                                                <th>Email Id</th>
-                                                <th>Area</th>
-                                                <th>Door Number</th>
-                                                <th>Street Name</th>
+                                                <!--<th>Area</th>-->
+                                                <!--<th>Door Number</th>-->
+                                                <th>Address</th>
                                                 <th>House Type</th>
-                                                <th>Account Status</th>
+                                                <!--<th>Account Status</th>-->
                                                 <th>Installation Date</th>
-                                                <th>Activation Date</th>
+                                                <!--<th>Activation Date</th>-->
                                                 <th>Tariff</th>
                                                 <th>Advance</th>
                                                 <th>Balance</th>
-                                                <th>Status</th>
-                                                <th>Added On</th>
+                                                <!--<th>Status</th>-->
+                                                <!--<th>Added On</th>-->
                                                 <th>Action</th>
                                                 
                                             </tr>
@@ -120,26 +156,25 @@ $query_data = $db->fetchQuery($select_query);
 											<?php $count = 1; foreach($query_data as $data) { ?>
 												<tr>
 													<td><?php echo $count; ?></td>
-                                                                                                        <td><?php echo strtoupper($data['kctv_id']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['caf_id']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['ca_id']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['tactv_id']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['eb_sc_no']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['user_name']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['mobile_number']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['email_id']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['area']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['door_no']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['streat_name']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['house_type']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['acc_status']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['installation_date']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['actiation_date']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['tariff']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['advance']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['balance']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['status']);?></td>
-                                                                                                        <td><?php echo date('Y-m-d H:i:s', $data['added_on']);?></td>
+													<td><?php echo strtoupper($data['kctv_id']);?></td>
+													<td><?php echo strtoupper($data['caf_id']);?></td>
+													<td><?php echo strtoupper($data['ca_id']);?></td>
+													<td><?php echo strtoupper($data['tactv_id']);?></td>
+													<!--<td><?php echo strtoupper($data['eb_sc_no']);?></td>-->
+													<td><?php echo strtoupper($data['user_name']);?></td>
+													<td><?php echo strtoupper($data['mobile_number']);?></td>
+													<!--<td><?php echo strtoupper($data['area']);?></td>-->
+													<!--<td><?php echo strtoupper($data['door_no']);?></td>-->
+													<td><?php echo $data['door_no'].strtoupper($data['street_name']);?></td>
+													<td><?php echo strtoupper($data['house_type']);?></td>
+													<!--<td><?php echo strtoupper($data['acc_status']);?></td>-->
+													<td><?php echo strtoupper($data['installation_date']);?></td>
+													<!--<td><?php echo strtoupper($data['activation_date']);?></td>-->
+													<td><?php echo strtoupper($data['tariff']);?></td>
+													<td><?php echo strtoupper($data['advance']);?></td>
+													<td><?php echo strtoupper($data['balance']);?></td>
+													<!--<td><?php echo strtoupper($data['status']);?></td>-->
+													<!--<td><?php echo $data['added_on'];?></td>-->
 													<td> Edit  | Delete </td>
 												</tr>
 											<?php $count++;} ?>
