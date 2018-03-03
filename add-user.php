@@ -1,3 +1,52 @@
+<?php
+require_once('framework/database/init.php');
+
+global $db;
+
+$error_msg = $success_msg = '';
+$dist_id = '';
+if(isset($_GET['uid'])) {
+	$user_id = $_GET['uid'];
+	$select_query = "SELECT * from user_list where status='active' AND user_id='".$user_id."'; ";
+	$query_data = $db->fetchQuery($select_query);
+	
+	if(empty($query_data)) {
+		$error_msg = 'No data found for this ID';
+	}
+}
+
+if(isset($_POST["submit"])) {
+	
+	$city_name = strtolower($_POST["city_name"]);	
+	$state_id = $_POST["state_id"];	
+	$pincode = $_POST["pincode"];	
+	$dist_id = $_POST["dist_id"];	
+	
+	if($city_name!='' && $state_id!='' && $dist_id!='') {
+		if(!empty($query_data) && $user_id!='') {
+			$ins_data = $db->executeQuery("UPDATE user_list SET city='".$city_name."', state_id='".$state_id."', pincode='".$pincode."', dist_id='".$dist_id."' WHERE user_id='".$user_id."' ");
+			//$user_id = $db->getLastInsertId();						
+		} else {
+			$ins_data = $db->executeQuery("INSERT INTO user_list (city, state_id, pincode, dist_id) VALUES ('".$city_name."', '".$state_id."', '".$pincode."', '".$dist_id."') ");
+			$user_id = $db->getLastInsertId();			
+		}
+		
+		if($user_id!= '') {
+			$success_msg = 'User Details updated successfully !!!';
+		} else {
+			$error_msg = 'Unexpected Error. Please try again.';
+		}
+	} else {
+		$error_msg = 'User Name cannot be empty !!!';
+	}
+}
+
+$state_query = "SELECT state_id, state_name from state_list where status='active'; ";
+$state_data = $db->fetchQuery($state_query);
+
+$district_query = "SELECT state_id, dist_id, district from district_list where status='active'; ";
+$district_data = $db->fetchQuery($district_query);
+?>
 <!DOCTYPE html>
 <html>
 
@@ -62,6 +111,20 @@
             <!-- Begin: Content -->
             <section id="content" class="animated fadeIn">
 
+				<!-- Success / Error Message -->
+				<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="fa fa-check pr10"></i>
+					<strong>Success !</strong> <?php echo $success_msg; ?>
+				</div>
+				
+				<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<i class="fa fa-remove pr10"></i>
+					<strong>Oops !</strong> <?php echo $error_msg; ?>
+				</div>			
+				<!-- Success / Error Message End -->				
+			
                 <h2 class="lh30 mt15 text-center">Add New <b class="text-primary">User</b></h2>
                
                 <div class="row">
@@ -93,7 +156,7 @@
 										<div class="section">
                                             <label for="kctv_id" class="field-label">Enter the KCTV ID</label>
                                             <label for="kctv_id" class="field prepend-icon">
-                                                <input type="text" name="kctv_id" id="kctv_id" class="gui-input">
+                                                <input type="text" name="kctv_id" id="kctv_id" class="gui-input" value="<?php echo isset($query_data[0]['kctv_id']) ? strtoupper($query_data[0]['kctv_id']) : '';?>">
                                                 <label for="kctv_id" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -103,7 +166,7 @@
 										<div class="section">
                                             <label for="caf_id" class="field-label">Enter the CAF ID</label>
                                             <label for="caf_id" class="field prepend-icon">
-                                                <input type="text" name="caf_id" id="caf_id" class="gui-input">
+                                                <input type="text" name="caf_id" id="caf_id" class="gui-input" value="<?php echo isset($query_data[0]['caf_id']) ? strtoupper($query_data[0]['caf_id']) : '';?>">
                                                 <label for="caf_id" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -113,7 +176,7 @@
 										<div class="section">
                                             <label for="ca_id" class="field-label">Enter the CA ID</label>
                                             <label for="ca_id" class="field prepend-icon">
-                                                <input type="text" name="ca_id" id="ca_id" class="gui-input">
+                                                <input type="text" name="ca_id" id="ca_id" class="gui-input" value="<?php echo isset($query_data[0]['ca_id']) ? strtoupper($query_data[0]['ca_id']) : '';?>">
                                                 <label for="ca_id" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -123,7 +186,7 @@
 										<div class="section">
                                             <label for="tactv_id" class="field-label">Enter the TACTV ID</label>
                                             <label for="tactv_id" class="field prepend-icon">
-                                                <input type="text" name="tactv_id" id="tactv_id" class="gui-input">
+                                                <input type="text" name="tactv_id" id="tactv_id" class="gui-input" value="<?php echo isset($query_data[0]['tactv_id']) ? strtoupper($query_data[0]['tactv_id']) : '';?>">
                                                 <label for="tactv_id" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -134,7 +197,7 @@
 										<div class="section">
                                             <label for="eb_sc_no" class="field-label">Enter the EB SC No</label>
                                             <label for="eb_sc_no" class="field prepend-icon">
-                                                <input type="text" name="eb_sc_no" id="eb_sc_no" class="gui-input">
+                                                <input type="text" name="eb_sc_no" id="eb_sc_no" class="gui-input" value="<?php echo isset($query_data[0]['eb_sc_no']) ? strtoupper($query_data[0]['eb_sc_no']) : '';?>">
                                                 <label for="eb_sc_no" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -150,7 +213,7 @@
                                         <div class="section">
                                             <label for="user_name" class="field-label">Customer Name</label>
                                             <label for="user_name" class="field prepend-icon">
-                                                <input type="text" name="user_name" id="user_name" class="gui-input">
+                                                <input type="text" name="user_name" id="user_name" class="gui-input" value="<?php echo isset($query_data[0]['user_name']) ? strtoupper($query_data[0]['user_name']) : '';?>">
                                                 <label for="user_name" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -160,7 +223,7 @@
 										<div class="section">
                                             <label for="mobile_number" class="field-label">Mobile Number</label>
                                             <label for="mobile_number" class="field prepend-icon">
-                                                <input type="text" name="mobile_number" id="mobile_number" class="gui-input">
+                                                <input type="text" name="mobile_number" id="mobile_number" class="gui-input" value="<?php echo isset($query_data[0]['mobile_number']) ? strtoupper($query_data[0]['mobile_number']) : '';?>">
                                                 <label for="mobile_number" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -170,7 +233,7 @@
 										<div class="section">
                                             <label for="alternate_number" class="field-label">Alternate Mobile Number</label>
                                             <label for="alternate_number" class="field prepend-icon">
-                                                <input type="text" name="alternate_number" id="alternate_number" class="gui-input">
+                                                <input type="text" name="alternate_number" id="alternate_number" class="gui-input" value="<?php echo isset($query_data[0]['alternate_number']) ? strtoupper($query_data[0]['alternate_number']) : '';?>">
                                                 <label for="alternate_number" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -180,7 +243,7 @@
 										<div class="section">
                                             <label for="email_id" class="field-label">Enter the Email ID</label>
                                             <label for="email_id" class="field prepend-icon">
-                                                <input type="text" name="email_id" id="email_id" class="gui-input">
+                                                <input type="text" name="email_id" id="email_id" class="gui-input" value="<?php echo isset($query_data[0]['email_id']) ? strtoupper($query_data[0]['email_id']) : '';?>">
                                                 <label for="email_id" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
