@@ -62,226 +62,405 @@
             <!-- Begin: Content -->
             <section id="content" class="animated fadeIn">
 
-                <h2 class="lh30 mt15 text-center">Add New <b class="text-primary">City</b></h2>
+                <h2 class="lh30 mt15 text-center">Add New <b class="text-primary">User</b></h2>
                
                 <div class="row">
                     <div class="col-md-9 center-block">
 
+						<!-- Form Wizard -->
+                        <div class="admin-form">
 
-                        <!-- Form Wizard -->
-                        <div class="admin-form theme-primary">
+                            <form method="post" id="form-wizard">
+                                <div class="wizard steps-bg clearfix steps-tabs steps-show-icons steps-justified">
 
-                            <div class="panel">
-                
-                                <form method="post" action="/" id="admin-form">
-                                    <div class="panel-body">
-                                    
-                                        <div class="section-divider mb40 mt20"><span> Add New User </span></div><!-- .section-divider -->
-                                        
-                                        <div class="section row">
-                                            <div class="col-md-12">
-                                                <label for="user" class="field prepend-icon">
-                                                    <input type="text" name="user" id="user" class="gui-input" placeholder="Enter the user...">
-                                                    <label for="user" class="field-icon"><i class="fa fa-user"></i></label>  
+                                    <!-- Wizard step 1 -->
+                                    <h4 class="wizard-section-title"><i class="fa fa-user pr5"></i> Basic Info</h4>
+                                    <section class="wizard-section">
+
+                                        <div class="section">
+                                            <label for="user_type" class="field-label">Select User type</label>
+                                            <label for="user_type" class="field">
+												<select name="user_type" id="user_type" class="gui-input">
+													<option value="">Select User type</option>
+													<option value="admin">Admin</option>
+													<option value="customer">Customer</option>
+													<option value="staff">Staff</option>
+												</select>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
+
+										<div class="section">
+                                            <label for="kctv_id" class="field-label">Enter the KCTV ID</label>
+                                            <label for="kctv_id" class="field prepend-icon">
+                                                <input type="text" name="kctv_id" id="kctv_id" class="gui-input">
+                                                <label for="kctv_id" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
-                                            </div><!-- end section -->
-                                            
-                                        </div><!-- end .section row section --> 
-                                                    
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
+										
+										<div class="section">
+                                            <label for="caf_id" class="field-label">Enter the CAF ID</label>
+                                            <label for="caf_id" class="field prepend-icon">
+                                                <input type="text" name="caf_id" id="caf_id" class="gui-input">
+                                                <label for="caf_id" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
+										
+										<div class="section">
+                                            <label for="ca_id" class="field-label">Enter the CA ID</label>
+                                            <label for="ca_id" class="field prepend-icon">
+                                                <input type="text" name="ca_id" id="ca_id" class="gui-input">
+                                                <label for="ca_id" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->	
+
+										<div class="section">
+                                            <label for="tactv_id" class="field-label">Enter the TACTV ID</label>
+                                            <label for="tactv_id" class="field prepend-icon">
+                                                <input type="text" name="tactv_id" id="tactv_id" class="gui-input">
+                                                <label for="tactv_id" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->										
+
+
+										<div class="section">
+                                            <label for="eb_sc_no" class="field-label">Enter the EB SC No</label>
+                                            <label for="eb_sc_no" class="field prepend-icon">
+                                                <input type="text" name="eb_sc_no" id="eb_sc_no" class="gui-input">
+                                                <label for="eb_sc_no" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->																		
+
+                                    </section>
+									
+                                    <!-- Wizard step 2 -->
+                                    <h4 class="wizard-section-title"><i class="fa fa-user pr5"></i> Personal Details</h4>
+                                    <section class="wizard-section">
 
                                         <div class="section">
-                                            <label class="field select">
-                                                <select id="kctv_id" name="kctv_id">
-                                                    <option value="">Select user...</option>   
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->    
-  
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="caf_id" name="caf_id">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->           
+                                            <label for="user_name" class="field-label">Customer Name</label>
+                                            <label for="user_name" class="field prepend-icon">
+                                                <input type="text" name="user_name" id="user_name" class="gui-input">
+                                                <label for="user_name" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
+										
+										<div class="section">
+                                            <label for="mobile_number" class="field-label">Mobile Number</label>
+                                            <label for="mobile_number" class="field prepend-icon">
+                                                <input type="text" name="mobile_number" id="mobile_number" class="gui-input">
+                                                <label for="mobile_number" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
+										
+										<div class="section">
+                                            <label for="alternate_number" class="field-label">Alternate Mobile Number</label>
+                                            <label for="alternate_number" class="field prepend-icon">
+                                                <input type="text" name="alternate_number" id="alternate_number" class="gui-input">
+                                                <label for="alternate_number" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->										
+										
+										<div class="section">
+                                            <label for="email_id" class="field-label">Enter the Email ID</label>
+                                            <label for="email_id" class="field prepend-icon">
+                                                <input type="text" name="email_id" id="email_id" class="gui-input">
+                                                <label for="email_id" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->	
+										
+										<div class="section">
+                                            <label for="house_type" class="field-label">House Type</label>
+                                            <label for="house_type" class="field prepend-icon">
+												<select name="house_type" id="same_address" class="gui-input">
+													<option value="own">Own</option>
+													<option value="rent">Rent</option>
+												</select>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->											
+										
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="ca_id" name="ca_id">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section --> 
+										<div class="section">
+                                            <label for="door_no" class="field-label">Door no</label>
+                                            <label for="door_no" class="field prepend-icon">
+                                                <input type="text" name="door_no" id="door_no" class="gui-input">
+                                                <label for="door_no" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->										
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="tactv_id" name="tactv_id">
-                                                    <option value="">Select user...</option>   
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->    
-  
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="ec_sc_no" name="ec_sc_no">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->           
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="user_name" name="user_name">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->  
+										<div class="section">
+                                            <label for="street_name" class="field-label">Street Name</label>
+                                            <label for="street_name" class="field prepend-icon">
+                                                <input type="text" name="street_name" id="street_name" class="gui-input">
+                                                <label for="street_name" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
 
                                         <div class="section">
-                                            <label class="field select">
-                                                <select id="mobile_number" name="mobile_number">
-                                                    <option value="">Select user...</option>   
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->    
-  
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="email_id" name="email_id">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->           
+                                            <label for="state" class="field-label">Select State</label>
+                                            <label for="state" class="field">
+												<select name="state" id="state" class="gui-input">
+													<option value="">Select state</option>
+												</select>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="area_id" name="area_id">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section --> 
+                                        <div class="section">
+                                            <label for="district" class="field-label">Select District</label>
+                                            <label for="district" class="field">
+												<select name="district" id="district" class="gui-input">
+													<option value="">Select district</option>
+												</select>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="door_no" name="door_no">
-                                                    <option value="">Select user...</option>   
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->    
-  
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="street_name" name="street_name">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->           
+										<div class="section">
+                                            <label for="city" class="field-label">Select City</label>
+                                            <label for="city" class="field prepend-icon">
+												<select name="city" id="city" class="gui-input">
+													<option value="">Select city</option>
+												</select>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->					
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="house_type" name="house_type">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->     
-                                      
-                                     <div class="section">
-                                            <label class="field select">
-                                                <select id="acc_status" name="acc_status">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->     
+										<div class="section">
+                                            <label for="pincode" class="field-label">Pin Code</label>
+                                            <label for="pincode" class="field prepend-icon">
+                                                <input type="text" name="pincode" id="pincode" class="gui-input">
+                                                <label for="pincode" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->		
+
+										<div class="section">
+                                            <label for="same_address" class="field-label">Is Permanent Address same as above Address</label>
+                                            <label for="same_address" class="field prepend-icon">
+												<select name="same_address" id="same_address" class="gui-input">
+													<option value="yes">Yes</option>
+													<option value="no">No</option>
+												</select>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->		
+
+										<div class="section">
+                                            <label for="p_door_no" class="field-label">Permanent Door no</label>
+                                            <label for="p_door_no" class="field prepend-icon">
+                                                <input type="text" name="p_door_no" id="p_door_no" class="gui-input">
+                                                <label for="p_door_no" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->										
 
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="installation_date" name="installation_date">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->           
+										<div class="section">
+                                            <label for="p_street_name" class="field-label">Permanent Street Name</label>
+                                            <label for="p_street_name" class="field prepend-icon">
+                                                <input type="text" name="p_street_name" id="p_street_name" class="gui-input">
+                                                <label for="p_street_name" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="activation_date" name="activation_date">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section --> 
+                                        <div class="section">
+                                            <label for="p_state" class="field-label">Select Permanent State</label>
+                                            <label for="p_state" class="field">
+												<select name="p_state" id="p_state" class="gui-input">
+													<option value="">Select state</option>
+												</select>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="tariff_id" name="tariff_id">
-                                                    <option value="">Select user...</option>   
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->    
-  
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="advance" name="advance">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->           
+                                        <div class="section">
+                                            <label for="p_district" class="field-label">Select Permanent District</label>
+                                            <label for="p_district" class="field">
+												<select name="p_district" id="p_district" class="gui-input">
+													<option value="">Select district</option>
+												</select>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
 
-                                      <div class="section">
-                                            <label class="field select">
-                                                <select id="balance" name="balance">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->     
-                                      
-                                     <div class="section">
-                                            <label class="field select">
-                                                <select id="status" name="status">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->   
+										<div class="section">
+                                            <label for="p_city" class="field-label">Select Permanent City</label>
+                                            <label for="p_city" class="field prepend-icon">
+												<select name="p_city" id="p_city" class="gui-input">
+													<option value="">Select city</option>
+												</select>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->					
 
-                                     <div class="section">
-                                            <label class="field select">
-                                                <select id="added_on" name="added_on">
-                                                    <option value="">Select user...</option>
-                                                </select>
-                                                <i class="arrow double"></i>                    
-                                            </label>  
-                                        </div><!-- end section -->    
+										<div class="section">
+                                            <label for="p_pincode" class="field-label">Permanent Pin Code</label>
+                                            <label for="p_pincode" class="field prepend-icon">
+                                                <input type="text" name="p_pincode" id="p_pincode" class="gui-input">
+                                                <label for="p_pincode" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->												
 
-                                                            
-                                    </div><!-- end .form-body section -->
-                                    <div class="panel-footer text-right">
-                                        <button type="submit" name="submit" value="submit" class="button btn-primary"> save user </button>
-                                        <button type="reset" class="button"> Cancel </button>
-                                    </div><!-- end .form-footer section -->
-                                </form>
+                                    </section>									
 
-                            </div>
+                                    <!-- Wizard step 3 -->
+                                    <h4 class="wizard-section-title"><i class="fa fa-dollar pr5"></i> Company Details</h4>
+                                    <section class="wizard-section">
+
+                                        <div class="section">
+                                            <label for="company_name" class="field-label">Select Company Name</label>
+                                            <label for="company_name" class="field">
+												<select name="company_name" id="company_name" class="gui-input">
+													<option value="">Select Company</option>
+												</select>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
+										
+                                        <div class="section">
+                                            <label for="branch" class="field-label">Select Branch</label>
+                                            <label for="branch" class="field">
+												<select name="branch" id="branch" class="gui-input">
+													<option value="">Select branch</option>
+												</select>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->										
+
+										<div class="section">
+                                            <label for="tariff" class="field-label">Tariff</label>
+                                            <label for="tariff" class="field prepend-icon">
+                                                <input type="text" name="tariff" id="tariff" class="gui-input">
+                                                <label for="tariff" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->	
+										
+										<div class="section">
+                                            <label for="advance" class="field-label">Advance</label>
+                                            <label for="advance" class="field prepend-icon">
+                                                <input type="text" name="advance" id="advance" class="gui-input">
+                                                <label for="advance" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->	
+
+										<div class="section">
+                                            <label for="balance" class="field-label">Balance</label>
+                                            <label for="balance" class="field prepend-icon">
+                                                <input type="text" name="balance" id="balance" class="gui-input">
+                                                <label for="balance" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->			
+
+                                    </section>
+
+                                    <!-- Wizard step 4 -->
+                                    <h4 class="wizard-section-title"><i class="fa fa-shopping-cart pr5"></i> Important Dates</h4>
+                                    <section class="wizard-section">
+
+										<div class="section">
+                                            <label for="installation_date" class="field-label">Installation Date</label>
+                                            <label for="installation_date" class="field prepend-icon">
+                                                <input type="text" name="installation_date" id="installation_date" class="gui-input">
+                                                <label for="installation_date" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->			
+										
+
+										<div class="section">
+                                            <label for="activation_date" class="field-label">Activation Date</label>
+                                            <label for="activation_date" class="field prepend-icon">
+                                                <input type="text" name="activation_date" id="activation_date" class="gui-input">
+                                                <label for="activation_date" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->			
+
+										
+										<div class="section">
+                                            <label for="deactivation_date" class="field-label">Deactivation Date</label>
+                                            <label for="deactivation_date" class="field prepend-icon">
+                                                <input type="text" name="deactivation_date" id="deactivation_date" class="gui-input">
+                                                <label for="deactivation_date" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->			
+										
+
+										<div class="section">
+                                            <label for="shifting_date" class="field-label">Shifting Date</label>
+                                            <label for="shifting_date" class="field prepend-icon">
+                                                <input type="text" name="shifting_date" id="shifting_date" class="gui-input">
+                                                <label for="shifting_date" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->			
+
+
+										<div class="section">
+                                            <label for="rejoint_date" class="field-label">Rejoint Date</label>
+                                            <label for="rejoint_date" class="field prepend-icon">
+                                                <input type="text" name="rejoint_date" id="rejoint_date" class="gui-input">
+                                                <label for="rejoint_date" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->													
+
+                                    </section>
+                                </div>
+                                <!-- End: Wizard -->
+
+                            </form>
+                            <!-- End Account2 Form -->
 
                         </div>
-                        <!-- end: .admin-form -->
+                        <!-- end: .admin-form -->					
 
                     </div>
 
@@ -338,6 +517,36 @@
             // Init Demo JS     
             Demo.init();
   
+  
+              // Form Wizard 
+            var form = $("#form-wizard");
+            form.validate({
+                errorPlacement: function errorPlacement(error, element) {
+                    element.before(error);
+                },
+                rules: {
+                    confirm: {
+                        equalTo: "#password"
+                    }
+                }
+            });
+            form.children(".wizard").steps({
+                headerTag: ".wizard-section-title",
+                bodyTag: ".wizard-section",
+                onStepChanging: function(event, currentIndex, newIndex) {
+                    form.validate().settings.ignore = ":disabled,:hidden";
+                    return form.valid();
+                },
+                onFinishing: function(event, currentIndex) {
+                    form.validate().settings.ignore = ":disabled";
+                    return form.valid();
+                },
+                onFinished: function(event, currentIndex) {
+                    //alert("Submitted!");
+					form.submit();
+                }
+            });
+
     
             /* @custom validation method (smartCaptcha) 
             ------------------------------------------------------------------ */
