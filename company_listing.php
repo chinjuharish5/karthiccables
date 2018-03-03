@@ -2,6 +2,29 @@
 require_once('framework/database/init.php');
 
 global $db;
+
+// Delete District
+$error_msg = $success_msg = '';
+if(isset($_GET['cid']) && isset($_GET['type'])) {
+	$company_id = $_GET['cid'];
+	
+	$select_query = "SELECT * from company_list where status='active' AND company_id='".$company_id."'; ";
+	$query_data = $db->fetchQuery($select_query);
+	
+	if(empty($query_data)) {
+		$error_msg = 'No data found for this ID';
+	} else {		
+		$del_query = "UPDATE company_list SET status='inactive' where STATUS='active' AND company_id='".$company_id."'; ";
+		$del_data = $db->executeQuery($del_query);
+		
+		if($del_data) {
+			$success_msg = 'Company Deleted Successfully';
+		} else {
+			$error_msg = 'Please try again';
+		}
+	}
+}
+
 $select_query = "SELECT * from company_list where status='active'; ";
 $query_data = $db->fetchQuery($select_query);
 ?>
@@ -76,9 +99,23 @@ $query_data = $db->fetchQuery($select_query);
                 <div class="tray tray-center p40 va-t posr">
 
                     <div class="row">
+					
+						<!-- Success / Error Message -->
+						<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-check pr10"></i>
+							<strong>Success !</strong> <?php echo $success_msg; ?>
+						</div>
+						
+						<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-remove pr10"></i>
+							<strong>Oops !</strong> <?php echo $error_msg; ?>
+						</div>			
+						<!-- Success / Error Message End -->							
 						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
-							<button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Company</button>
+							<a href="add-company.php"><button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Company</button></a>
 						</div>
 						
                         <div class="col-md-12">
@@ -91,9 +128,9 @@ $query_data = $db->fetchQuery($select_query);
                                     <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-					        <th>S No</th>
+												<th>S No</th>
                                                 <th>Company Name</th>
-                                                <th>State</th>
+                                                <th>Branch</th>
                                                 <th>Added On</th>
                                                 <th>Action</th>
                                             </tr>
@@ -102,10 +139,10 @@ $query_data = $db->fetchQuery($select_query);
 											<?php $count = 1; foreach($query_data as $data) { ?>
 												<tr>
 													<td><?php echo $count; ?></td>
-                                                                                                        <td><?php echo strtoupper($data['distict']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['state']);?></td>
-                                                                                                        <td><?php echo date('Y-m-d H:i:s', $data['added_on']);?></td>
-													<td> Edit  | Delete </td>
+													<td><?php echo strtoupper($data['company_name']);?></td>
+													<td><?php echo strtoupper($data['branch']);?></td>
+													<td><?php echo $data['added_on'];?></td>
+													<td> <a href="add-company.php?cid=<?php echo $data['company_id'];?>">Edit</a>  | <a href="company_listing.php?cid=<?php echo $data['company_id'];?>&type=delete" onclick="return confirm('Are you sure you want to Delete ?')">Delete</a> </td>
 												</tr>
 											<?php $count++;} ?>
                                         </tbody>
