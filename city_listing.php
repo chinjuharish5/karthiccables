@@ -2,7 +2,30 @@
 require_once('framework/database/init.php');
 
 global $db;
-$select_query = "SELECT * from city_list where status='active'; ";
+
+// Delete District
+$error_msg = $success_msg = '';
+if(isset($_GET['cid']) && isset($_GET['type'])) {
+	$city_id = $_GET['cid'];
+	
+	$select_query = "SELECT city_id, dist_id, state_id, pincode, city from city_list where status='active' AND city_id='".$city_id."'; ";
+	$query_data = $db->fetchQuery($select_query);
+	
+	if(empty($query_data)) {
+		$error_msg = 'No data found for this ID';
+	} else {		
+		$del_query = "UPDATE city_list SET status='inactive' where STATUS='active' AND city_id='".$city_id."'; ";
+		$del_data = $db->executeQuery($del_query);
+		
+		if($del_data) {
+			$success_msg = 'City Deleted Successfully';
+		} else {
+			$error_msg = 'Please try again';
+		}
+	}
+}
+
+$select_query = "SELECT c.city_id, c.city, c.pincode, c.added_on, c.state_id, s.state_name AS state, c.dist_id, d.district as dist FROM state_list s JOIN district_list d ON s.state_id=d.state_id JOIN city_list c ON (c.state_id=s.state_id AND c.dist_id=d.dist_id) WHERE c.status='active' AND d.status='active' AND s.status='active'; ";
 $query_data = $db->fetchQuery($select_query);
 ?>
 <!DOCTYPE html>
@@ -76,6 +99,20 @@ $query_data = $db->fetchQuery($select_query);
                 <div class="tray tray-center p40 va-t posr">
 
                     <div class="row">
+					
+						<!-- Success / Error Message -->
+						<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-check pr10"></i>
+							<strong>Success !</strong> <?php echo $success_msg; ?>
+						</div>
+						
+						<div class="alert alert-danger alert-dismissable"  <?php if($error_msg=='') {echo 'style="display:none"';} ?>>
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<i class="fa fa-remove pr10"></i>
+							<strong>Oops !</strong> <?php echo $error_msg; ?>
+						</div>			
+						<!-- Success / Error Message End -->						
 						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
 							<button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New City</button>
@@ -91,11 +128,11 @@ $query_data = $db->fetchQuery($select_query);
                                     <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-						<th>S No</th>
+												<th>S No</th>
                                                 <th>City</th>
                                                 <th>Pincode</th>
                                                 <th>State</th>
-                                                <th>Dist</th>
+                                                <th>District</th>
                                                 <th>Added On</th>
                                                 <th>Action</th>
                                             </tr>
@@ -104,12 +141,12 @@ $query_data = $db->fetchQuery($select_query);
 											<?php $count = 1; foreach($query_data as $data) { ?>
 												<tr>
 													<td><?php echo $count; ?></td>
-                                                                                                        <td><?php echo strtoupper($data['city']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['pincode']);?></td>
-                                                                                                        <td><?php echo strtoupper($data['state']);?></td>
+                                                    <td><?php echo strtoupper($data['city']);?></td>
+                                                    <td><?php echo strtoupper($data['pincode']);?></td>
+                                                    <td><?php echo strtoupper($data['state']);?></td>
 													<td><?php echo strtoupper($data['dist']);?></td>
-                                                                                                        <td><?php echo date('Y-m-d H:i:s', $data['added_on']);?></td>
-													<td> Edit  | Delete </td>
+                                                    <td><?php echo $data['added_on'];?></td>
+													<td> <a href="add-city.php?cid=<?php echo $data['city_id'];?>">Edit</a>  | <a href="city_listing.php?cid=<?php echo $data['city_id'];?>&type=delete" onclick="return confirm('Are you sure you want to Delete ?')">Delete</a> </td>
 												</tr>
 											<?php $count++;} ?>
                                         </tbody>
