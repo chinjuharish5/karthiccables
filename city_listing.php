@@ -115,7 +115,7 @@ $query_data = $db->fetchQuery($select_query);
 						<!-- Success / Error Message End -->						
 						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
-							<button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New City</button>
+							<a href="add-city.php"><button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New City</button></a>
 						</div>
 						
                         <div class="col-md-12">
