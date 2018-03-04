@@ -4,7 +4,7 @@ require_once('framework/database/init.php');
 global $db;
 
 $error_msg = $success_msg = '';
-$dist_id = '';
+$user_id = '';
 if(isset($_GET['uid'])) {
 	$user_id = $_GET['uid'];
 	$select_query = "SELECT u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.user_name, u.user_type, u.mobile_number, u.alternate_number, u.email_id, u.door_no, u.street_name, u.city_id, u.state_id, u.dist_id, u.same_address, u.p_door_no, u.p_street_name, u.p_city_id, u.p_state_id, u.p_dist_id, u.area_id, u.company_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date, a.area, c.pincode, cl.pincode as p_pincode FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id JOIN city_list c ON u.city_id=c.city_id JOIN city_list cl ON u.city_id=cl.city_id WHERE u.status='active' AND a.status='active' AND t.status='active' AND c.status='active' AND cl.status='active' AND u.user_id='".$user_id."'; ";
@@ -15,7 +15,7 @@ if(isset($_GET['uid'])) {
 	}
 }
 
-if(isset($_POST["submit"])) {
+if(isset($_POST["user_name"])) {
 	// Wiz 1
 	$user_type = strtolower($_POST["user_type"]);
 	$kctv_id = $_POST['kctv_id'];
@@ -30,6 +30,7 @@ if(isset($_POST["submit"])) {
 	$alternate_number = $_POST['alternate_number'];
 	$email_id = strtolower($_POST['email_id']);
 	$house_type = strtolower($_POST['house_type']);
+	$area_id = $_POST['area_id'];
 	$door_no = $_POST['door_no'];
 	$street_name = strtolower($_POST['street_name']);
 	$state_id = $_POST['state'];
@@ -54,12 +55,16 @@ if(isset($_POST["submit"])) {
 	// Wiz 4
 	$installation_date = $_POST['installation_date'];
 	
-	if($city_name!='' && $state_id!='' && $dist_id!='') {
+	if($user_name!='') {
 		if(!empty($query_data) && $user_id!='') {
-			$ins_data = $db->executeQuery("UPDATE user_list SET user_type='".$user_type."', kctv_id='".$kctv_id."', caf_id='".$caf_id."', ca_id='".$ca_id."', tactv_id='".$tactv_id."', eb_sc_no='".$eb_sc_no."', user_name='".$user_name."', mobile_number='".$mobile_number."', alternate_number='".$alternate_number."', email_id='".$email_id."', house_type='".$house_type."', door_no='".$door_no."', street_name='".$street_name."', state_id='".$state_id."', dist_id='".$dist_id."', city_id='".$city_id."', same_address='".$same_address."', p_door_no='".$p_door_no."', p_street_name='".$p_street_name."', p_state_id='".$p_state_id."', p_dist_id='".$p_dist_id."', p_city_id='".$p_city_id."', company_name='".$company_name."', tariff_id='".$tariff_id."', advance='".$advance."', balance='".$balance."', installation_date='".$installation_date."' WHERE user_id='".$user_id."' ");
+			$update_query = "UPDATE user_list SET user_type='".$user_type."', kctv_id='".$kctv_id."', caf_id='".$caf_id."', ca_id='".$ca_id."', tactv_id='".$tactv_id."', eb_sc_no='".$eb_sc_no."', user_name='".$user_name."', mobile_number='".$mobile_number."', alternate_number='".$alternate_number."', email_id='".$email_id."', house_type='".$house_type."', door_no='".$door_no."', street_name='".$street_name."', state_id='".$state_id."', dist_id='".$dist_id."', city_id='".$city_id."', same_address='".$same_address."', p_door_no='".$p_door_no."', p_street_name='".$p_street_name."', p_state_id='".$p_state_id."', p_dist_id='".$p_dist_id."', p_city_id='".$p_city_id."', company_id='".$company_name."', tariff_id='".$tariff_id."', advance='".$advance."', balance='".$balance."', installation_date='".$installation_date."', area_id='".$area_id."' WHERE user_id='".$user_id."' ";
+			//echo $update_query;exit;
+			$ins_data = $db->executeQuery($update_query);
 			//$user_id = $db->getLastInsertId();						
 		} else {
-			$ins_data = $db->executeQuery("INSERT INTO user_list (user_type, kctv_id, caf_id, ca_id, tactv_id, eb_sc_no, mobile_number, alternate_number, email_id, house_type, door_no, street_name, state_id, dist_id, city_id, same_address, p_door_no, p_street_name, p_state_id, p_dist_id, p_city_id, company_name, tariff_id, advance, balance, installation_date) VALUES ('".$user_type."', '".$kctv_id."', '".$caf_id."', '".$ca_id."', '".$tactv_id."', '".$eb_sc_no."', '".$user_name."', '".$mobile_number."', '".$alternate_number."', '".$email_id."', '".$house_type."', '".$door_no."', '".$street_name."', '".$state_id."', '".$dist_id."', '".$city_id."', '".$same_address."', '".$p_door_no."', '".$p_street_name."', '".$p_state_id."', '".$p_dist_id."', '".$p_city_id."', '".$company_name."', '".$tariff_id."', '".$advance."', '".$balance."', '".$installation_date."') ");
+			$ins_query = "INSERT INTO user_list (user_type, kctv_id, caf_id, ca_id, tactv_id, eb_sc_no, user_name, mobile_number, alternate_number, email_id, house_type, door_no, street_name, state_id, dist_id, city_id, same_address, p_door_no, p_street_name, p_state_id, p_dist_id, p_city_id, company_id, tariff_id, advance, balance, installation_date, area_id) VALUES ('".$user_type."', '".$kctv_id."', '".$caf_id."', '".$ca_id."', '".$tactv_id."', '".$eb_sc_no."', '".$user_name."', '".$mobile_number."', '".$alternate_number."', '".$email_id."', '".$house_type."', '".$door_no."', '".$street_name."', '".$state_id."', '".$dist_id."', '".$city_id."', '".$same_address."', '".$p_door_no."', '".$p_street_name."', '".$p_state_id."', '".$p_dist_id."', '".$p_city_id."', '".$company_name."', '".$tariff_id."', '".$advance."', '".$balance."', '".$installation_date."', '".$area_id."') ";
+			//echo $ins_query;exit;
+			$ins_data = $db->executeQuery($ins_query);
 			$user_id = $db->getLastInsertId();
 		}
 		
@@ -87,6 +92,9 @@ $company_data = $db->fetchQuery($company_query);
 
 $tariff_query = "SELECT tariff_id, tariff, amount from tariff_list where status='active'; ";
 $tariff_data = $db->fetchQuery($tariff_query);
+
+$area_query = "SELECT area_id, area, area_code from area where status='active'; ";
+$area_data = $db->fetchQuery($area_query);
 ?>
 <!DOCTYPE html>
 <html>
@@ -301,7 +309,20 @@ $tariff_data = $db->fetchQuery($tariff_query);
                                                 </label>
                                             </label>
                                         </div>
-                                        <!-- end section -->											
+                                        <!-- end section -->			
+
+                                        <div class="section">
+                                            <label for="area_id" class="field-label">Select Area</label>
+                                            <label for="area_id" class="field">
+												<select name="area_id" id="area_id" class="gui-input">
+													<option value="">Select area</option>
+													<?php foreach($area_data as $s_data) { ?>
+														<option value="<?php echo $s_data['area_id']; ?>" <?php if(isset($query_data[0]['area_id'])) { if($query_data[0]['area_id']==$s_data['area_id']) { echo 'selected="selected"'; } } ?>><?php echo $s_data['area_code']." - ".strtoupper($s_data['area']); ?></option>
+													<?php } ?>													
+												</select>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->										
 										
 
 										<div class="section">
