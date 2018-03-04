@@ -8,7 +8,7 @@
 						<div class="user-menu">
 								<div class="row text-center mbn">
 										<div class="col-xs-4">
-												<a href="dashboard.html" class="text-primary" data-toggle="tooltip" data-placement="top" title="Dashboard">
+												<a href="dashboard.php" class="text-primary" data-toggle="tooltip" data-placement="top" title="Dashboard">
 														<span class="glyphicons glyphicons-home"></span>
 												</a>
 										</div>
@@ -58,14 +58,14 @@
 								</a>
 						</li>
 						<li class="active">
-								<a href="dashboard.html">
+								<a href="dashboard.php">
 										<span class="glyphicons glyphicons-home"></span>
 										<span class="sidebar-title">Dashboard</span>
 								</a>
 						</li>-->
 						<li class="sidebar-label pt15">Menu</li>
 						<li class="active">
-								<a href="dashboard.html">
+								<a href="dashboard.php">
 										<span class="glyphicons glyphicons-home"></span>
 										<span class="sidebar-title">Dashboard</span>
 								</a>
@@ -119,15 +119,15 @@
 								</a>
 								<ul class="nav sub-nav">
 										<li>
-												<a href="admin_forms-elements.html">
+												<a href="#">
 														<span class="glyphicons glyphicons-edit"></span> Payment </a>
 										</li>
 										<li>
-												<a href="admin_forms-widgets.html">
+												<a href="#">
 														<span class="glyphicons glyphicons-calendar"></span> My Profile </a>
 										</li>
 										<li>
-												<a href="admin_forms-layouts.html">
+												<a href="#">
 														<span class="glyphicons glyphicons-more_windows"></span> Usage </a>
 										</li>
 								</ul>

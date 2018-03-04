@@ -31,6 +31,8 @@ if(isset($_POST["submit"])) {
 		
 		if($company_id!= '') {
 			$success_msg = 'Company Details updated successfully !!!';
+			$select_query = "SELECT * from company_list where status='active' AND company_id='".$company_id."'; ";
+			$query_data = $db->fetchQuery($select_query);			
 		} else {
 			$error_msg = 'Unexpected Error. Please try again.';
 		}

@@ -33,6 +33,8 @@ if(isset($_POST["submit"])) {
 		
 		if($city_id!= '') {
 			$success_msg = 'City Details updated successfully !!!';
+			$select_query = "SELECT state_id, dist_id, city_id, city, pincode from city_list where status='active' AND city_id='".$city_id."'; ";
+			$query_data = $db->fetchQuery($select_query);			
 		} else {
 			$error_msg = 'Unexpected Error. Please try again.';
 		}

@@ -32,6 +32,8 @@ if(isset($_POST["submit"])) {
 		
 		if($tariff_id!= '') {
 			$success_msg = 'Tariff Details updated successfully !!!';
+			$select_query = "SELECT * from tariff_list where status='active' AND tariff_id='".$tariff_id."'; ";
+			$query_data = $db->fetchQuery($select_query);			
 		} else {
 			$error_msg = 'Unexpected Error. Please try again.';
 		}

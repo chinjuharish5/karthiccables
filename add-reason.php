@@ -29,6 +29,8 @@ if(isset($_POST["submit"])) {
 		}
 		
 		if($reason_id!= '') {
+			$select_query = "SELECT * from reason_list where status='active' AND reason_id='".$reason_id."'; ";
+			$query_data = $db->fetchQuery($select_query);			
 			$success_msg = 'Reason Details updated successfully !!!';
 		} else {
 			$error_msg = 'Unexpected Error. Please try again.';

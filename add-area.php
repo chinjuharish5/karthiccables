@@ -31,6 +31,8 @@ if(isset($_POST["submit"])) {
 		
 		if($area_id!= '') {
 			$success_msg = 'Area Details updated successfully !!!';
+			$select_query = "SELECT area_id,area_code,area from area where status='active' AND area_id='".$area_id."'; ";
+			$query_data = $db->fetchQuery($select_query);			
 		} else {
 			$error_msg = 'Unexpected Error. Please try again.';
 		}

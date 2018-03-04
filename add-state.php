@@ -30,6 +30,8 @@ if(isset($_POST["submit"])) {
 		
 		if($state_id!= '') {
 			$success_msg = 'State Details updated successfully !!!';
+			$select_query = "SELECT state_id, state_name from state_list where status='active' AND state_id='".$state_id."'; ";
+			$query_data = $db->fetchQuery($select_query);			
 		} else {
 			$error_msg = 'Unexpected Error. Please try again.';
 		}

@@ -70,6 +70,8 @@ if(isset($_POST["user_name"])) {
 		
 		if($user_id!= '') {
 			$success_msg = 'User Details updated successfully !!!';
+			$select_query = "SELECT u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.user_name, u.user_type, u.mobile_number, u.alternate_number, u.email_id, u.door_no, u.street_name, u.city_id, u.state_id, u.dist_id, u.same_address, u.p_door_no, u.p_street_name, u.p_city_id, u.p_state_id, u.p_dist_id, u.area_id, u.company_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date, a.area, c.pincode, cl.pincode as p_pincode FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id JOIN city_list c ON u.city_id=c.city_id JOIN city_list cl ON u.city_id=cl.city_id WHERE u.status='active' AND a.status='active' AND t.status='active' AND c.status='active' AND cl.status='active' AND u.user_id='".$user_id."'; ";
+			$query_data = $db->fetchQuery($select_query);			
 		} else {
 			$error_msg = 'Unexpected Error. Please try again.';
 		}

@@ -31,6 +31,8 @@ if(isset($_POST["submit"])) {
 		
 		if($dist_id!= '') {
 			$success_msg = 'District Details updated successfully !!!';
+			$select_query = "SELECT state_id, dist_id, district from district_list where status='active' AND dist_id='".$dist_id."'; ";
+			$query_data = $db->fetchQuery($select_query);			
 		} else {
 			$error_msg = 'Unexpected Error. Please try again.';
 		}
