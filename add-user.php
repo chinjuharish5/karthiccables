@@ -7,7 +7,8 @@ $error_msg = $success_msg = '';
 $dist_id = '';
 if(isset($_GET['uid'])) {
 	$user_id = $_GET['uid'];
-	$select_query = "SELECT * from user_list where status='active' AND user_id='".$user_id."'; ";
+	$select_query = "SELECT u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.user_name, u.user_type, u.mobile_number, u.alternate_number, u.email_id, u.door_no, u.street_name, u.city_id, u.state_id, u.dist_id, u.same_address, u.p_door_no, u.p_street_name, u.p_city_id, u.p_state_id, u.p_dist_id, u.area_id, u.company_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date, a.area, c.pincode, cl.pincode as p_pincode FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id JOIN city_list c ON u.city_id=c.city_id JOIN city_list cl ON u.city_id=cl.city_id WHERE u.status='active' AND a.status='active' AND t.status='active' AND c.status='active' AND cl.status='active' AND u.user_id='".$user_id."'; ";
+	//echo $select_query;exit;
 	$query_data = $db->fetchQuery($select_query);
 	
 	if(empty($query_data)) {
@@ -46,6 +47,12 @@ $state_data = $db->fetchQuery($state_query);
 
 $district_query = "SELECT state_id, dist_id, district from district_list where status='active'; ";
 $district_data = $db->fetchQuery($district_query);
+
+$city_query = "SELECT state_id, dist_id, city_id, city from city_list where status='active'; ";
+$city_data = $db->fetchQuery($city_query);
+
+$company_query = "SELECT company_id, company_name, branch from company_list where status='active'; ";
+$company_data = $db->fetchQuery($company_query);
 ?>
 <!DOCTYPE html>
 <html>
@@ -145,9 +152,9 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="user_type" class="field">
 												<select name="user_type" id="user_type" class="gui-input">
 													<option value="">Select User type</option>
-													<option value="admin">Admin</option>
-													<option value="customer">Customer</option>
-													<option value="staff">Staff</option>
+													<option value="admin" <?php if(isset($query_data[0]['user_type'])) { if($query_data[0]['user_type']=='admin') { echo 'selected="selected"'; } } ?>>Admin</option>
+													<option value="customer" <?php if(isset($query_data[0]['user_type'])) { if($query_data[0]['user_type']=='customer') { echo 'selected="selected"'; } } ?>>Customer</option>
+													<option value="staff" <?php if(isset($query_data[0]['user_type'])) { if($query_data[0]['user_type']=='staff') { echo 'selected="selected"'; } } ?>>Staff</option>
 												</select>
                                             </label>
                                         </div>
@@ -254,8 +261,8 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="house_type" class="field-label">House Type</label>
                                             <label for="house_type" class="field prepend-icon">
 												<select name="house_type" id="same_address" class="gui-input">
-													<option value="own">Own</option>
-													<option value="rent">Rent</option>
+													<option value="own" <?php if(isset($query_data[0]['house_type'])) { if($query_data[0]['house_type']=='own') { echo 'selected="selected"'; } } ?>>Own</option>
+													<option value="rent" <?php if(isset($query_data[0]['house_type'])) { if($query_data[0]['house_type']=='rent') { echo 'selected="selected"'; } } ?>>Rent</option>
 												</select>
                                                 </label>
                                             </label>
@@ -266,7 +273,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="door_no" class="field-label">Door no</label>
                                             <label for="door_no" class="field prepend-icon">
-                                                <input type="text" name="door_no" id="door_no" class="gui-input">
+                                                <input type="text" name="door_no" id="door_no" class="gui-input" value="<?php echo isset($query_data[0]['door_no']) ? strtoupper($query_data[0]['door_no']) : '';?>">
                                                 <label for="door_no" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -277,7 +284,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="street_name" class="field-label">Street Name</label>
                                             <label for="street_name" class="field prepend-icon">
-                                                <input type="text" name="street_name" id="street_name" class="gui-input">
+                                                <input type="text" name="street_name" id="street_name" class="gui-input" value="<?php echo isset($query_data[0]['street_name']) ? strtoupper($query_data[0]['street_name']) : '';?>">
                                                 <label for="street_name" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -289,6 +296,9 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="state" class="field">
 												<select name="state" id="state" class="gui-input">
 													<option value="">Select state</option>
+													<?php foreach($state_data as $s_data) { ?>
+														<option value="<?php echo $s_data['state_id']; ?>" <?php if(isset($query_data[0]['state_id'])) { if($query_data[0]['state_id']==$s_data['state_id']) { echo 'selected="selected"'; } } ?>><?php echo strtoupper($s_data['state_name']); ?></option>
+													<?php } ?>													
 												</select>
                                             </label>
                                         </div>
@@ -299,6 +309,9 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="district" class="field">
 												<select name="district" id="district" class="gui-input">
 													<option value="">Select district</option>
+													<?php foreach($district_data as $s_data) { ?>
+														<option value="<?php echo $s_data['dist_id']; ?>" state_id="<?php echo $s_data['state_id']; ?>" <?php if(isset($query_data[0]['dist_id'])) { if($query_data[0]['dist_id']==$s_data['dist_id']) { echo 'selected="selected"'; } } ?>><?php echo strtoupper($s_data['district']); ?></option>
+													<?php } ?>														
 												</select>
                                             </label>
                                         </div>
@@ -309,6 +322,9 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="city" class="field prepend-icon">
 												<select name="city" id="city" class="gui-input">
 													<option value="">Select city</option>
+													<?php foreach($city_data as $s_data) { ?>
+														<option value="<?php echo $s_data['city_id']; ?>" dist_id="<?php echo $s_data['dist_id']; ?>" <?php if(isset($query_data[0]['city_id'])) { if($query_data[0]['city_id']==$s_data['city_id']) { echo 'selected="selected"'; } } ?>><?php echo strtoupper($s_data['city']); ?></option>
+													<?php } ?>														
 												</select>
                                                 </label>
                                             </label>
@@ -318,7 +334,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="pincode" class="field-label">Pin Code</label>
                                             <label for="pincode" class="field prepend-icon">
-                                                <input type="text" name="pincode" id="pincode" class="gui-input">
+                                                <input type="text" name="pincode" id="pincode" class="gui-input" value="<?php echo isset($query_data[0]['pincode']) ? strtoupper($query_data[0]['pincode']) : '';?>">
                                                 <label for="pincode" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -329,8 +345,8 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="same_address" class="field-label">Is Permanent Address same as above Address</label>
                                             <label for="same_address" class="field prepend-icon">
 												<select name="same_address" id="same_address" class="gui-input">
-													<option value="yes">Yes</option>
-													<option value="no">No</option>
+													<option value="yes" <?php if(isset($query_data[0]['same_address'])) { if($query_data[0]['same_address']=='yes') { echo 'selected="selected"'; } } ?>>Yes</option>
+													<option value="no" <?php if(isset($query_data[0]['same_address'])) { if($query_data[0]['same_address']=='no') { echo 'selected="selected"'; } } ?>>No</option>
 												</select>
                                                 </label>
                                             </label>
@@ -340,7 +356,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="p_door_no" class="field-label">Permanent Door no</label>
                                             <label for="p_door_no" class="field prepend-icon">
-                                                <input type="text" name="p_door_no" id="p_door_no" class="gui-input">
+                                                <input type="text" name="p_door_no" id="p_door_no" class="gui-input" value="<?php echo isset($query_data[0]['p_door_no']) ? strtoupper($query_data[0]['p_door_no']) : '';?>">
                                                 <label for="p_door_no" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -351,7 +367,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="p_street_name" class="field-label">Permanent Street Name</label>
                                             <label for="p_street_name" class="field prepend-icon">
-                                                <input type="text" name="p_street_name" id="p_street_name" class="gui-input">
+                                                <input type="text" name="p_street_name" id="p_street_name" class="gui-input" value="<?php echo isset($query_data[0]['p_street_name']) ? strtoupper($query_data[0]['p_street_name']) : '';?>">
                                                 <label for="p_street_name" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -363,6 +379,9 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="p_state" class="field">
 												<select name="p_state" id="p_state" class="gui-input">
 													<option value="">Select state</option>
+													<?php foreach($state_data as $s_data) { ?>
+														<option value="<?php echo $s_data['state_id']; ?>" <?php if(isset($query_data[0]['p_state_id'])) { if($query_data[0]['p_state_id']==$s_data['state_id']) { echo 'selected="selected"'; } } ?>><?php echo strtoupper($s_data['state_name']); ?></option>
+													<?php } ?>															
 												</select>
                                             </label>
                                         </div>
@@ -373,6 +392,9 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="p_district" class="field">
 												<select name="p_district" id="p_district" class="gui-input">
 													<option value="">Select district</option>
+													<?php foreach($district_data as $s_data) { ?>
+														<option value="<?php echo $s_data['dist_id']; ?>" state_id="<?php echo $s_data['p_state_id']; ?>" <?php if(isset($query_data[0]['p_dist_id'])) { if($query_data[0]['p_dist_id']==$s_data['dist_id']) { echo 'selected="selected"'; } } ?>><?php echo strtoupper($s_data['district']); ?></option>
+													<?php } ?>														
 												</select>
                                             </label>
                                         </div>
@@ -383,6 +405,9 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="p_city" class="field prepend-icon">
 												<select name="p_city" id="p_city" class="gui-input">
 													<option value="">Select city</option>
+													<?php foreach($city_data as $s_data) { ?>
+														<option value="<?php echo $s_data['city_id']; ?>" dist_id="<?php echo $s_data['p_dist_id']; ?>" <?php if(isset($query_data[0]['p_city_id'])) { if($query_data[0]['p_city_id']==$s_data['city_id']) { echo 'selected="selected"'; } } ?>><?php echo strtoupper($s_data['city']); ?></option>
+													<?php } ?>													
 												</select>
                                                 </label>
                                             </label>
@@ -392,7 +417,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="p_pincode" class="field-label">Permanent Pin Code</label>
                                             <label for="p_pincode" class="field prepend-icon">
-                                                <input type="text" name="p_pincode" id="p_pincode" class="gui-input">
+                                                <input type="text" name="p_pincode" id="p_pincode" class="gui-input" value="<?php echo isset($query_data[0]['p_pincode']) ? strtoupper($query_data[0]['p_pincode']) : '';?>">
                                                 <label for="p_pincode" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -410,6 +435,9 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="company_name" class="field">
 												<select name="company_name" id="company_name" class="gui-input">
 													<option value="">Select Company</option>
+													<?php foreach($company_data as $s_data) { ?>
+														<option value="<?php echo $s_data['company_id']; ?>" <?php if(isset($query_data[0]['company_id'])) { if($query_data[0]['company_id']==$s_data['company_id']) { echo 'selected="selected"'; } } ?>><?php echo strtoupper($s_data['company_name']); ?></option>
+													<?php } ?>													
 												</select>
                                             </label>
                                         </div>
@@ -420,6 +448,9 @@ $district_data = $db->fetchQuery($district_query);
                                             <label for="branch" class="field">
 												<select name="branch" id="branch" class="gui-input">
 													<option value="">Select branch</option>
+													<?php foreach($company_data as $s_data) { ?>
+														<option value="<?php echo $s_data['company_id']; ?>" <?php if(isset($query_data[0]['company_id'])) { if($query_data[0]['company_id']==$s_data['company_id']) { echo 'selected="selected"'; } } ?>><?php echo strtoupper($s_data['branch']); ?></option>
+													<?php } ?>																				
 												</select>
                                             </label>
                                         </div>
@@ -428,7 +459,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="tariff" class="field-label">Tariff</label>
                                             <label for="tariff" class="field prepend-icon">
-                                                <input type="text" name="tariff" id="tariff" class="gui-input">
+                                                <input type="text" name="tariff" id="tariff" class="gui-input" value="<?php echo isset($query_data[0]['tariff']) ? strtoupper($query_data[0]['tariff']) : '';?>">
                                                 <label for="tariff" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -438,7 +469,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="advance" class="field-label">Advance</label>
                                             <label for="advance" class="field prepend-icon">
-                                                <input type="text" name="advance" id="advance" class="gui-input">
+                                                <input type="text" name="advance" id="advance" class="gui-input" value="<?php echo isset($query_data[0]['advance']) ? strtoupper($query_data[0]['advance']) : '';?>">
                                                 <label for="advance" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -448,7 +479,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="balance" class="field-label">Balance</label>
                                             <label for="balance" class="field prepend-icon">
-                                                <input type="text" name="balance" id="balance" class="gui-input">
+                                                <input type="text" name="balance" id="balance" class="gui-input" value="<?php echo isset($query_data[0]['balance']) ? strtoupper($query_data[0]['balance']) : '';?>">
                                                 <label for="balance" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -464,7 +495,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="installation_date" class="field-label">Installation Date</label>
                                             <label for="installation_date" class="field prepend-icon">
-                                                <input type="text" name="installation_date" id="installation_date" class="gui-input">
+                                                <input type="text" name="installation_date" id="installation_date" class="gui-input" value="<?php echo isset($query_data[0]['installation_date']) ? strtoupper($query_data[0]['installation_date']) : '';?>">
                                                 <label for="installation_date" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -475,7 +506,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="activation_date" class="field-label">Activation Date</label>
                                             <label for="activation_date" class="field prepend-icon">
-                                                <input type="text" name="activation_date" id="activation_date" class="gui-input">
+                                                <input type="text" name="activation_date" id="activation_date" class="gui-input" value="<?php echo isset($query_data[0]['activation_date']) ? strtoupper($query_data[0]['activation_date']) : '';?>">
                                                 <label for="activation_date" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -486,7 +517,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="deactivation_date" class="field-label">Deactivation Date</label>
                                             <label for="deactivation_date" class="field prepend-icon">
-                                                <input type="text" name="deactivation_date" id="deactivation_date" class="gui-input">
+                                                <input type="text" name="deactivation_date" id="deactivation_date" class="gui-input" value="<?php echo isset($query_data[0]['deactivation_date']) ? strtoupper($query_data[0]['deactivation_date']) : '';?>">
                                                 <label for="deactivation_date" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -497,7 +528,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="shifting_date" class="field-label">Shifting Date</label>
                                             <label for="shifting_date" class="field prepend-icon">
-                                                <input type="text" name="shifting_date" id="shifting_date" class="gui-input">
+                                                <input type="text" name="shifting_date" id="shifting_date" class="gui-input" value="<?php echo isset($query_data[0]['shifting_date']) ? strtoupper($query_data[0]['shifting_date']) : '';?>">
                                                 <label for="shifting_date" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
@@ -508,7 +539,7 @@ $district_data = $db->fetchQuery($district_query);
 										<div class="section">
                                             <label for="rejoint_date" class="field-label">Rejoint Date</label>
                                             <label for="rejoint_date" class="field prepend-icon">
-                                                <input type="text" name="rejoint_date" id="rejoint_date" class="gui-input">
+                                                <input type="text" name="rejoint_date" id="rejoint_date" class="gui-input" value="<?php echo isset($query_data[0]['rejoint_date']) ? strtoupper($query_data[0]['rejoint_date']) : '';?>">
                                                 <label for="rejoint_date" class="field-icon"><i class="fa fa-lock"></i>
                                                 </label>
                                             </label>
