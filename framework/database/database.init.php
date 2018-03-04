@@ -43,7 +43,13 @@ class Database {
 			$results = @mysqli_query ( $this->connection, $query );
 			if($results->num_rows > 0) {
 				//return mysqli_fetch_assoc($results);
-				return mysqli_fetch_all($results,MYSQLI_ASSOC);
+				//return mysqli_fetch_all($results,MYSQLI_ASSOC);
+				$data = array();
+				while ($row = $results->fetch_assoc()) {
+					// do what you need.
+					$data[] = $row;
+				}		
+				return $data;				
 			} 
 			return array();
 			//return $results;
