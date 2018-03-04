@@ -302,7 +302,7 @@ $area_data = $db->fetchQuery($area_query);
 										<div class="section">
                                             <label for="house_type" class="field-label">House Type</label>
                                             <label for="house_type" class="field prepend-icon">
-												<select name="house_type" id="same_address" class="gui-input">
+												<select name="house_type" id="house_type" class="gui-input">
 													<option value="own" <?php if(isset($query_data[0]['house_type'])) { if($query_data[0]['house_type']=='own') { echo 'selected="selected"'; } } ?>>Own</option>
 													<option value="rent" <?php if(isset($query_data[0]['house_type'])) { if($query_data[0]['house_type']=='rent') { echo 'selected="selected"'; } } ?>>Rent</option>
 												</select>
@@ -408,7 +408,7 @@ $area_data = $db->fetchQuery($area_query);
                                         </div>
                                         <!-- end section -->		
 
-										<div class="section">
+										<div class="section is_permanent" style="display:none">
                                             <label for="p_door_no" class="field-label">Permanent Door no</label>
                                             <label for="p_door_no" class="field prepend-icon">
                                                 <input type="text" name="p_door_no" id="p_door_no" class="gui-input" value="<?php echo isset($query_data[0]['p_door_no']) ? strtoupper($query_data[0]['p_door_no']) : '';?>">
@@ -419,7 +419,7 @@ $area_data = $db->fetchQuery($area_query);
                                         <!-- end section -->										
 
 
-										<div class="section">
+										<div class="section is_permanent" style="display:none">
                                             <label for="p_street_name" class="field-label">Permanent Street Name</label>
                                             <label for="p_street_name" class="field prepend-icon">
                                                 <input type="text" name="p_street_name" id="p_street_name" class="gui-input" value="<?php echo isset($query_data[0]['p_street_name']) ? strtoupper($query_data[0]['p_street_name']) : '';?>">
@@ -429,7 +429,7 @@ $area_data = $db->fetchQuery($area_query);
                                         </div>
                                         <!-- end section -->
 
-                                        <div class="section">
+                                        <div class="section is_permanent" style="display:none">
                                             <label for="p_state" class="field-label">Select Permanent State</label>
                                             <label for="p_state" class="field">
 												<select name="p_state" id="p_state" class="gui-input">
@@ -442,7 +442,7 @@ $area_data = $db->fetchQuery($area_query);
                                         </div>
                                         <!-- end section -->
 
-                                        <div class="section">
+                                        <div class="section is_permanent" style="display:none">
                                             <label for="p_district" class="field-label">Select Permanent District</label>
                                             <label for="p_district" class="field">
 												<select name="p_district" id="p_district" class="gui-input">
@@ -455,7 +455,7 @@ $area_data = $db->fetchQuery($area_query);
                                         </div>
                                         <!-- end section -->
 
-										<div class="section">
+										<div class="section is_permanent" style="display:none">
                                             <label for="p_city" class="field-label">Select Permanent City</label>
                                             <label for="p_city" class="field prepend-icon">
 												<select name="p_city" id="p_city" class="gui-input">
@@ -469,7 +469,7 @@ $area_data = $db->fetchQuery($area_query);
                                         </div>
                                         <!-- end section -->					
 
-										<div class="section">
+										<div class="section is_permanent" style="display:none">
                                             <label for="p_pincode" class="field-label">Permanent Pin Code</label>
                                             <label for="p_pincode" class="field prepend-icon">
                                                 <input type="text" name="p_pincode" id="p_pincode" class="gui-input" value="<?php echo isset($query_data[0]['p_pincode']) ? strtoupper($query_data[0]['p_pincode']) : '';?>">
@@ -660,6 +660,12 @@ $area_data = $db->fetchQuery($area_query);
     <script type="text/javascript" src="html/assets/js/main.js"></script>
     <script type="text/javascript" src="html/assets/js/demo.js"></script>
     <script type="text/javascript">
+	$(document).on('change','#same_address',function(){
+		$('.is_permanent').hide();
+		if($('#same_address').val()=='no') {
+			$('.is_permanent').show();
+		}
+	});
         jQuery(document).ready(function() {
 
             "use strict";
@@ -707,174 +713,7 @@ $area_data = $db->fetchQuery($area_query);
             $.validator.methods.smartCaptcha = function(value, element, param) {
                     return value == param;
             };
-                    
-            $( "#admin-form" ).validate({
-            
-                    /* @validation states + elements 
-                    ------------------------------------------- */
-                    
-                    errorClass: "state-error",
-                    validClass: "state-success",
-                    errorElement: "em",
-                    
-                    /* @validation rules 
-                    ------------------------------------------ */
-                        
-                    rules: {
-                            user: {
-                                    required: true
-                            },
-                            kctv_id: {
-                                    required: true
-                            },    
-                            caf_id: {
-                                    required: true
-                            },                  
-                            ca_id: {
-                                    required: true
-                            },    
-                            tactv_id: {
-                                    required: true
-                            },    
-                            eb_sc_no: {
-                                    required: true
-                            },    
-                            user_name: {
-                                    required: true
-                            },    
-                            mobile_number: {
-                                    required: true
-                            },    
-                            email_id: {
-                                    required: true
-                            },    
-                            area_id: {
-                                    required: true
-                            },    
-                            door_no: {
-                                    required: true
-                            },    
-                            street_name: {
-                                    required: true
-                            },    
-                            house_type: {
-                                    required: true
-                            },    
-                            acc_status: {
-                                    required: true
-                            },    
-                            installation_date: {
-                                    required: true
-                            },    
-                            activation_date: {
-                                    required: true
-                            },    
-                            tariff_id: {
-                                    required: true
-                            },    
-                            advance: {
-                                    required: true
-                            },    
-                            balance: {
-                                    required: true
-                            },    
-                            status: {
-                                    required: true
-                            },    
-                            added_on: {
-                                    required: true
-                            },    
-                    },
-                    
-                    /* @validation error messages 
-                    ---------------------------------------------- */
-                        
-                    messages:{
-                            user: {
-                                    required: 'Enter the city name'
-                            },
-                            kctv_id: {
-                                    required: 'Select the kctv id'
-                            }, 
-                            caf_id: {
-                                    required: 'Select the caf id'
-                            },                  
-                            ca_id: {
-                                    required: 'Select the ca id'
-                            },
-                            tactv_id: {
-                                    required: 'Select the tactv id'
-                            },
-                            eb_sc_no: {
-                                    required: 'Select the eb sc id'
-                            },
-                            user_name: {
-                                    required: 'Select the username'
-                            },
-                            mobile_number: {
-                                    required: 'Select the mobile number'
-                            },
-                            email_id: {
-                                    required: 'Select the email id'
-                            },
-                            area_id: {
-                                    required: 'Select the area id'
-                            },
-                            door_no: {
-                                    required: 'Select the door number'
-                            },
-                            street_name: {
-                                    required: 'Select the street name'
-                            },
-                            house_type: {
-                                    required: 'Select the house type'
-                            },
-                            acc_status: {
-                                    required: 'Select the account status'
-                            },
-                            installation_date: {
-                                    required: 'Select the installation date'
-                            },
-                            activation_date: {
-                                    required: 'Select the activation'
-                            },
-                            tariff_id: {
-                                    required: 'Select the tariff'
-                            },
-                            advance: {
-                                    required: 'Select the advance'
-                            },
-                            balance: {
-                                    required: 'Select the balance'
-                            },
-                            status: {
-                                    required: 'Select the status'
-                            },
-                            added_on: {
-                                    required: 'Select the added on'
-                            },
-                    },
-
-                    /* @validation highlighting + error placement  
-                    ---------------------------------------------------- */ 
-                    
-                    highlight: function(element, errorClass, validClass) {
-                            $(element).closest('.field').addClass(errorClass).removeClass(validClass);
-                    },
-                    unhighlight: function(element, errorClass, validClass) {
-                            $(element).closest('.field').removeClass(errorClass).addClass(validClass);
-                    },
-                    errorPlacement: function(error, element) {
-                       if (element.is(":radio") || element.is(":checkbox")) {
-                                element.closest('.option-group').after(error);
-                       } else {
-                                error.insertAfter(element.parent());
-                       }
-                    }
-                            
-            });     
-        
-        });
+        });		
     </script>
     <!-- END: PAGE SCRIPTS -->
 
