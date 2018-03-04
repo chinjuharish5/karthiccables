@@ -51,13 +51,16 @@ if(isset($_POST["submit"])) {
 	$advance = $_POST['advance'];
 	$balance = $_POST['balance'];
 	
+	// Wiz 4
+	$installation_date = $_POST['installation_date'];
+	
 	if($city_name!='' && $state_id!='' && $dist_id!='') {
 		if(!empty($query_data) && $user_id!='') {
-			$ins_data = $db->executeQuery("UPDATE user_list SET user_type='".$user_type."', kctv_id='".$kctv_id."', caf_id='".$caf_id."', ca_id='".$ca_id."', tactv_id='".$tactv_id."', eb_sc_no='".$eb_sc_no."', user_name='".$user_name."', mobile_number='".$mobile_number."', alternate_number='".$alternate_number."', email_id='".$email_id."', house_type='".$house_type."', door_no='".$door_no."', street_name='".$street_name."', state_id='".$state_id."', dist_id='".$dist_id."', city_id='".$city_id."', same_address='".$same_address."', p_door_no='".$p_door_no."', p_street_name='".$p_street_name."', p_state_id='".$p_state_id."', p_dist_id='".$p_dist_id."', p_city_id='".$p_city_id."', company_name='".$company_name."', tariff_id='".$tariff_id."', advance='".$advance."', balance='".$balance."' WHERE user_id='".$user_id."' ");
+			$ins_data = $db->executeQuery("UPDATE user_list SET user_type='".$user_type."', kctv_id='".$kctv_id."', caf_id='".$caf_id."', ca_id='".$ca_id."', tactv_id='".$tactv_id."', eb_sc_no='".$eb_sc_no."', user_name='".$user_name."', mobile_number='".$mobile_number."', alternate_number='".$alternate_number."', email_id='".$email_id."', house_type='".$house_type."', door_no='".$door_no."', street_name='".$street_name."', state_id='".$state_id."', dist_id='".$dist_id."', city_id='".$city_id."', same_address='".$same_address."', p_door_no='".$p_door_no."', p_street_name='".$p_street_name."', p_state_id='".$p_state_id."', p_dist_id='".$p_dist_id."', p_city_id='".$p_city_id."', company_name='".$company_name."', tariff_id='".$tariff_id."', advance='".$advance."', balance='".$balance."', installation_date='".$installation_date."' WHERE user_id='".$user_id."' ");
 			//$user_id = $db->getLastInsertId();						
 		} else {
-			$ins_data = $db->executeQuery("INSERT INTO user_list (user_type, kctv_id, caf_id, ca_id, tactv_id, eb_sc_no, mobile_number, alternate_number, email_id, house_type, door_no, street_name, state_id, dist_id, city_id, same_address, p_door_no, p_street_name, p_state_id, p_dist_id, p_city_id, company_name, tariff_id, advance, balance) VALUES ('".$user_type."', '".$kctv_id."', '".$caf_id."', '".$ca_id."', '".$tactv_id."', '".$eb_sc_no."', '".$user_name."', '".$mobile_number."', '".$alternate_number."', '".$email_id."', '".$house_type."', '".$door_no."', '".$street_name."', '".$state_id."', '".$dist_id."', '".$city_id."', '".$same_address."', '".$p_door_no."', '".$p_street_name."', '".$p_state_id."', '".$p_dist_id."', '".$p_city_id."', '".$company_name."', '".$tariff_id."', '".$advance."', '".$balance."') ");
-			$user_id = $db->getLastInsertId();			
+			$ins_data = $db->executeQuery("INSERT INTO user_list (user_type, kctv_id, caf_id, ca_id, tactv_id, eb_sc_no, mobile_number, alternate_number, email_id, house_type, door_no, street_name, state_id, dist_id, city_id, same_address, p_door_no, p_street_name, p_state_id, p_dist_id, p_city_id, company_name, tariff_id, advance, balance, installation_date) VALUES ('".$user_type."', '".$kctv_id."', '".$caf_id."', '".$ca_id."', '".$tactv_id."', '".$eb_sc_no."', '".$user_name."', '".$mobile_number."', '".$alternate_number."', '".$email_id."', '".$house_type."', '".$door_no."', '".$street_name."', '".$state_id."', '".$dist_id."', '".$city_id."', '".$same_address."', '".$p_door_no."', '".$p_street_name."', '".$p_state_id."', '".$p_dist_id."', '".$p_city_id."', '".$company_name."', '".$tariff_id."', '".$advance."', '".$balance."', '".$installation_date."') ");
+			$user_id = $db->getLastInsertId();
 		}
 		
 		if($user_id!= '') {
