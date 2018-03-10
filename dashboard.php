@@ -1,3 +1,14 @@
+<?php
+require_once('framework/database/init.php');
+
+global $db;
+
+if(!isset($_SESSION['user_id'])) {
+	// Login success, Redirect to dashboard
+	header('Location: index.php'); exit;	
+}
+
+?>
 <!DOCTYPE html>
 <html>
 

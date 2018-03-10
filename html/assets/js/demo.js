@@ -16,10 +16,29 @@ var Demo = function() {
          if($('body.timeline-page').length || $('body.admin-validation-page').length) {
             return;
          }
+		 
+		 var ajRes = false;
+		 $.ajax({
+			 url: 'validate.php',
+			 type: 'POST',
+			 data: {"username": $("#username").val(), "password": $("#password").val()},
+			 async: false,
+			 success: function(result) {
+				if(result === '1') {
+					ajRes = true;
+				} else {
+					ajRes = false
+				}
+			 }
+		 });
+		 if(ajRes===false) {
+			e.preventDefault;
+			return false;
+		 }
 
-         e.preventDefault;
-         alert('Your form has submitted!');
-         return false;
+         //e.preventDefault;
+         //alert('Your form has submitted!');
+         //return false;
 
       });
 

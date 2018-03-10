@@ -7,7 +7,7 @@ $error_msg = $success_msg = '';
 $user_id = '';
 if(isset($_GET['uid'])) {
 	$user_id = $_GET['uid'];
-	$select_query = "SELECT u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.user_name, u.user_type, u.mobile_number, u.alternate_number, u.email_id, u.door_no, u.street_name, u.city_id, u.state_id, u.dist_id, u.same_address, u.p_door_no, u.p_street_name, u.p_city_id, u.p_state_id, u.p_dist_id, u.area_id, u.company_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date, a.area, c.pincode, cl.pincode as p_pincode FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id JOIN city_list c ON u.city_id=c.city_id JOIN city_list cl ON u.city_id=cl.city_id WHERE u.status='active' AND a.status='active' AND t.status='active' AND c.status='active' AND cl.status='active' AND u.user_id='".$user_id."'; ";
+	$select_query = "SELECT u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.cylinder_no, u.user_name, u.user_type, u.mobile_number, u.alternate_number, u.email_id, u.door_no, u.street_name, u.city_id, u.state_id, u.dist_id, u.same_address, u.p_door_no, u.p_street_name, u.p_city_id, u.p_state_id, u.p_dist_id, u.area_id, u.company_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date, a.area, c.pincode, cl.pincode as p_pincode FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id JOIN city_list c ON u.city_id=c.city_id JOIN city_list cl ON u.city_id=cl.city_id WHERE u.status='active' AND a.status='active' AND t.status='active' AND c.status='active' AND cl.status='active' AND u.user_id='".$user_id."'; ";
 	$query_data = $db->fetchQuery($select_query);
 	
 	if(empty($query_data)) {
@@ -23,6 +23,7 @@ if(isset($_POST["user_name"])) {
 	$ca_id = $_POST['ca_id'];
 	$tactv_id = $_POST['tactv_id'];
 	$eb_sc_no = $_POST['eb_sc_no'];
+	$cylinder_no = $_POST['cylinder_no'];
 	
 	// Wiz 2
 	$user_name = strtolower($_POST["user_name"]);	
@@ -57,12 +58,12 @@ if(isset($_POST["user_name"])) {
 	
 	if($user_name!='') {
 		if(!empty($query_data) && $user_id!='') {
-			$update_query = "UPDATE user_list SET user_type='".$user_type."', kctv_id='".$kctv_id."', caf_id='".$caf_id."', ca_id='".$ca_id."', tactv_id='".$tactv_id."', eb_sc_no='".$eb_sc_no."', user_name='".$user_name."', mobile_number='".$mobile_number."', alternate_number='".$alternate_number."', email_id='".$email_id."', house_type='".$house_type."', door_no='".$door_no."', street_name='".$street_name."', state_id='".$state_id."', dist_id='".$dist_id."', city_id='".$city_id."', same_address='".$same_address."', p_door_no='".$p_door_no."', p_street_name='".$p_street_name."', p_state_id='".$p_state_id."', p_dist_id='".$p_dist_id."', p_city_id='".$p_city_id."', company_id='".$company_name."', tariff_id='".$tariff_id."', advance='".$advance."', balance='".$balance."', installation_date='".$installation_date."', area_id='".$area_id."' WHERE user_id='".$user_id."' ";
+			$update_query = "UPDATE user_list SET user_type='".$user_type."', kctv_id='".$kctv_id."', caf_id='".$caf_id."', ca_id='".$ca_id."', tactv_id='".$tactv_id."', eb_sc_no='".$eb_sc_no."', cylinder_no='".$cylinder_no."', user_name='".$user_name."', mobile_number='".$mobile_number."', alternate_number='".$alternate_number."', email_id='".$email_id."', house_type='".$house_type."', door_no='".$door_no."', street_name='".$street_name."', state_id='".$state_id."', dist_id='".$dist_id."', city_id='".$city_id."', same_address='".$same_address."', p_door_no='".$p_door_no."', p_street_name='".$p_street_name."', p_state_id='".$p_state_id."', p_dist_id='".$p_dist_id."', p_city_id='".$p_city_id."', company_id='".$company_name."', tariff_id='".$tariff_id."', advance='".$advance."', balance='".$balance."', installation_date='".$installation_date."', area_id='".$area_id."' WHERE user_id='".$user_id."' ";
 			//echo $update_query;exit;
 			$ins_data = $db->executeQuery($update_query);
 			//$user_id = $db->getLastInsertId();						
 		} else {
-			$ins_query = "INSERT INTO user_list (user_type, kctv_id, caf_id, ca_id, tactv_id, eb_sc_no, user_name, mobile_number, alternate_number, email_id, house_type, door_no, street_name, state_id, dist_id, city_id, same_address, p_door_no, p_street_name, p_state_id, p_dist_id, p_city_id, company_id, tariff_id, advance, balance, installation_date, area_id) VALUES ('".$user_type."', '".$kctv_id."', '".$caf_id."', '".$ca_id."', '".$tactv_id."', '".$eb_sc_no."', '".$user_name."', '".$mobile_number."', '".$alternate_number."', '".$email_id."', '".$house_type."', '".$door_no."', '".$street_name."', '".$state_id."', '".$dist_id."', '".$city_id."', '".$same_address."', '".$p_door_no."', '".$p_street_name."', '".$p_state_id."', '".$p_dist_id."', '".$p_city_id."', '".$company_name."', '".$tariff_id."', '".$advance."', '".$balance."', '".$installation_date."', '".$area_id."') ";
+			$ins_query = "INSERT INTO user_list (user_type, kctv_id, caf_id, ca_id, tactv_id, eb_sc_no, cylinder_no, user_name, mobile_number, alternate_number, email_id, house_type, door_no, street_name, state_id, dist_id, city_id, same_address, p_door_no, p_street_name, p_state_id, p_dist_id, p_city_id, company_id, tariff_id, advance, balance, installation_date, area_id) VALUES ('".$user_type."', '".$kctv_id."', '".$caf_id."', '".$ca_id."', '".$tactv_id."', '".$eb_sc_no."', '".$cylinder_no."', '".$user_name."', '".$mobile_number."', '".$alternate_number."', '".$email_id."', '".$house_type."', '".$door_no."', '".$street_name."', '".$state_id."', '".$dist_id."', '".$city_id."', '".$same_address."', '".$p_door_no."', '".$p_street_name."', '".$p_state_id."', '".$p_dist_id."', '".$p_city_id."', '".$company_name."', '".$tariff_id."', '".$advance."', '".$balance."', '".$installation_date."', '".$area_id."') ";
 			//echo $ins_query;exit;
 			$ins_data = $db->executeQuery($ins_query);
 			$user_id = $db->getLastInsertId();
@@ -70,7 +71,7 @@ if(isset($_POST["user_name"])) {
 		
 		if($user_id!= '') {
 			$success_msg = 'User Details updated successfully !!!';
-			$select_query = "SELECT u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.user_name, u.user_type, u.mobile_number, u.alternate_number, u.email_id, u.door_no, u.street_name, u.city_id, u.state_id, u.dist_id, u.same_address, u.p_door_no, u.p_street_name, u.p_city_id, u.p_state_id, u.p_dist_id, u.area_id, u.company_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date, a.area, c.pincode, cl.pincode as p_pincode FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id JOIN city_list c ON u.city_id=c.city_id JOIN city_list cl ON u.city_id=cl.city_id WHERE u.status='active' AND a.status='active' AND t.status='active' AND c.status='active' AND cl.status='active' AND u.user_id='".$user_id."'; ";
+			$select_query = "SELECT u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.cylinder_no, u.user_name, u.user_type, u.mobile_number, u.alternate_number, u.email_id, u.door_no, u.street_name, u.city_id, u.state_id, u.dist_id, u.same_address, u.p_door_no, u.p_street_name, u.p_city_id, u.p_state_id, u.p_dist_id, u.area_id, u.company_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date, a.area, c.pincode, cl.pincode as p_pincode FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id JOIN city_list c ON u.city_id=c.city_id JOIN city_list cl ON u.city_id=cl.city_id WHERE u.status='active' AND a.status='active' AND t.status='active' AND c.status='active' AND cl.status='active' AND u.user_id='".$user_id."'; ";
 			$query_data = $db->fetchQuery($select_query);			
 		} else {
 			$error_msg = 'Unexpected Error. Please try again.';
@@ -199,6 +200,8 @@ $area_data = $db->fetchQuery($area_query);
 													<option value="admin" <?php if(isset($query_data[0]['user_type'])) { if($query_data[0]['user_type']=='admin') { echo 'selected="selected"'; } } ?>>Admin</option>
 													<option value="customer" <?php if(isset($query_data[0]['user_type'])) { if($query_data[0]['user_type']=='customer') { echo 'selected="selected"'; } } ?>>Customer</option>
 													<option value="staff" <?php if(isset($query_data[0]['user_type'])) { if($query_data[0]['user_type']=='staff') { echo 'selected="selected"'; } } ?>>Staff</option>
+													<option value="rent_staff" <?php if(isset($query_data[0]['user_type'])) { if($query_data[0]['user_type']=='rent_staff') { echo 'selected="selected"'; } } ?>>Rent House Staff</option>
+													<option value="own_staff" <?php if(isset($query_data[0]['user_type'])) { if($query_data[0]['user_type']=='own_staff') { echo 'selected="selected"'; } } ?>>Own House Staff</option>
 												</select>
                                             </label>
                                         </div>
@@ -253,7 +256,17 @@ $area_data = $db->fetchQuery($area_query);
                                                 </label>
                                             </label>
                                         </div>
-                                        <!-- end section -->																		
+                                        <!-- end section -->	
+
+										<div class="section">
+                                            <label for="cylinder_no" class="field-label">Enter the Cylinder No</label>
+                                            <label for="cylinder_no" class="field prepend-icon">
+                                                <input type="text" name="cylinder_no" id="cylinder_no" class="gui-input" value="<?php echo isset($query_data[0]['cylinder_no']) ? strtoupper($query_data[0]['cylinder_no']) : '';?>">
+                                                <label for="cylinder_no" class="field-icon"><i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->											
 
                                     </section>
 									

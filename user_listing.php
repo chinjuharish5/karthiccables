@@ -8,7 +8,7 @@ $error_msg = $success_msg = '';
 if(isset($_GET['uid']) && isset($_GET['type'])) {
 	$user_id = $_GET['uid'];
 	
-	$select_query = "SELECT * from user_list where status='active' AND user_id='".$user_id."'; ";
+	$select_query = "SELECT * from user_list where status='active' AND user_id='".$user_id."' AND user_type='customer'; ";
 	$query_data = $db->fetchQuery($select_query);
 	
 	if(empty($query_data)) {
@@ -25,7 +25,7 @@ if(isset($_GET['uid']) && isset($_GET['type'])) {
 	}
 }
 
-$select_query = "SELECT u.user_id, u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.user_name, u.mobile_number, u.email_id, u.door_no, u.street_name, u.area_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date,  a.area FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id WHERE u.status='active' AND a.status='active' AND t.status='active'; ";
+$select_query = "SELECT u.user_id, u.kctv_id, u.caf_id, u.ca_id, u.tactv_id, u.eb_sc_no, u.cylinder_no, u.user_name, u.mobile_number, u.email_id, u.door_no, u.street_name, u.area_id, u.house_type, u.tariff_id, t.tariff, u.advance, u.balance, u.status, u.added_on, u.acc_status, u.installation_date, u.activation_date,  a.area FROM user_list u JOIN `area` a ON u.area_id=a.area_id JOIN tariff_list t ON t.tariff_id=u.tariff_id WHERE u.status='active' AND a.status='active' AND t.status='active' AND u.user_type='customer'; ";
 $query_data = $db->fetchQuery($select_query);
 ?>
 <!DOCTYPE html>

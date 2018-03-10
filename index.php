@@ -1,3 +1,14 @@
+<?php
+require_once('framework/database/init.php');
+
+global $db;
+
+if(isset($_SESSION['user_id'])) {
+	// Login success, Redirect to dashboard
+	header('Location: dashboard.php'); exit;	
+}
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -155,7 +166,8 @@
                             <div class="panel-footer clearfix p10 ph15">
                                 <!--<button type="submit" class="button btn-primary mr10 pull-right">Login</button>-->
 
-								<a href="dashboard.php"><button type="button" class="button btn-primary mr10 pull-right">Login</button></a>
+								<!--<a href="dashboard.php"><button type="button" class="button btn-primary mr10 pull-right">Login</button></a>-->
+								<button type="submit"name="submit" value="submit" class="button btn-primary mr10 pull-right">Login</button>
                             <!--    <label class="switch block switch-primary pull-left input-align mt10">
                                     <input type="checkbox" name="remember" id="remember" checked>
                                     <label for="remember" data-on="YES" data-off="NO"></label>
