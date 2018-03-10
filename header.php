@@ -1,6 +1,6 @@
 <header class="navbar navbar-fixed-top bg-light">
 		<div class="navbar-branding">
-				<a class="navbar-brand" href="dashboard.html"> <b>Karthic</b>Cables
+				<a class="navbar-brand" href="dashboard.php"> <b>Karthic</b>Cables
 				</a>
 				<span id="toggle_sidemenu_l" class="glyphicons glyphicons-show_lines"></span>
 				<ul class="nav navbar-nav pull-right hidden">
@@ -124,7 +124,7 @@
 				</li>
 				<li class="dropdown">
 						<a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown"> <img src="html/assets/img/avatars/1.jpg" alt="avatar" class="mw30 br64 mr15">
-								<span>Karthic Cables</span>
+								<span><?php echo isset($_SESSION['user_name']) ? 'Welcome '.$_SESSION['user_name'] : 'Welcome User'; ?></span>
 								<span class="caret caret-tp hidden-xs"></span>
 						</a>
 						<ul class="dropdown-menu dropdown-persist pn w250 bg-white" role="menu">
@@ -168,7 +168,7 @@
 												<span class="fa fa-gear pr5"></span> My Account </a>
 								</li>
 								<li class="br-t of-h">
-										<a href="#" class="fw600 p12 animated animated-short fadeInDown">
+										<a href="logout.php" class="fw600 p12 animated animated-short fadeInDown">
 												<span class="fa fa-power-off pr5"></span> Logout </a>
 								</li>
 						</ul>
