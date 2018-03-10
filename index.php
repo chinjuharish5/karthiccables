@@ -103,11 +103,21 @@ if(isset($_SESSION['user_id'])) {
                                 </div>
                             </div>-->
                         </div>
-
+						
                         <!-- end .form-header section -->
                         <form method="post" action="dashboard.php" id="contact22">
                             <div class="panel-body bg-light p30">
                                 <div class="row">
+								
+								<!-- Success / Error Message -->
+								
+								<div class="alert alert-danger alert-dismissable error_msg" style="display:none">
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+									<i class="fa fa-remove pr10"></i>
+									<strong>Oops !</strong> <span id="error_msg"></span>
+								</div>			
+								<!-- Success / Error Message End -->									
+								
                                     <div class="col-sm-12 pr30">
 
                                         <!--<div class="section row hidden">

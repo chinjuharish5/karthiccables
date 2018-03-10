@@ -17,23 +17,45 @@ var Demo = function() {
             return;
          }
 		 
-		 var ajRes = false;
-		 $.ajax({
-			 url: 'validate.php',
-			 type: 'POST',
-			 data: {"username": $("#username").val(), "password": $("#password").val()},
-			 async: false,
-			 success: function(result) {
-				if(result === '1') {
-					ajRes = true;
-				} else {
-					ajRes = false
-				}
-			 }
-		 });
-		 if(ajRes===false) {
+		 $('.error_msg').hide();
+		 var username = $("#username").val();
+		 var pword = $("#password").val();
+		 if(username=='' && pword=='') {
+			$('#error_msg').html("Username & Password cannot be empty");
+			$('.error_msg').show();
 			e.preventDefault;
 			return false;
+		 } else if(username=='') {
+			$('#error_msg').html("Username cannot be empty");
+			$('.error_msg').show();
+			e.preventDefault;
+			return false;			
+		 } else if(pword=='') {
+			$('#error_msg').html("Password cannot be empty");
+			$('.error_msg').show();
+			e.preventDefault;
+			return false;			
+		 } else {	 
+			 var ajRes = false;
+			 $.ajax({
+				 url: 'validate.php',
+				 type: 'POST',
+				 data: {"username": $("#username").val(), "password": $("#password").val()},
+				 async: false,
+				 success: function(result) {
+					if(result === '1') {
+						ajRes = true;
+					} else {
+						ajRes = false
+					}
+				 }
+			 });
+			 if(ajRes===false) {
+				$('#error_msg').html("Invalid Username / Password");
+				$('.error_msg').show();
+				e.preventDefault;
+				return false;
+			 }
 		 }
 
          //e.preventDefault;
