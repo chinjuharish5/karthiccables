@@ -136,7 +136,8 @@ $query_data = $db->fetchQuery($select_query);
                                     <table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-												<th>S No</th>
+												<!--<th>S No</th>-->
+												<th>Action</th>
                                                 <th>Kctv Id</th>
                                                 <th>Caf Id</th>
                                                 <th>Ca Id</th>
@@ -163,7 +164,10 @@ $query_data = $db->fetchQuery($select_query);
                                         <tbody>
 											<?php $count = 1; foreach($query_data as $data) { ?>
 												<tr>
-													<td><?php echo $count; ?></td>
+													<!--<td><?php echo $count; ?></td>-->
+													<td>
+														<a href="make-payment.php?uid=<?php echo $data['user_id']; ?>"><button type="button" class="btn btn-rounded btn-primary btn-block">Make Payment</button></a>
+													</td>
 													<td><?php echo strtoupper($data['kctv_id']);?></td>
 													<td><?php echo strtoupper($data['caf_id']);?></td>
 													<td><?php echo strtoupper($data['ca_id']);?></td>
