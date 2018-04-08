@@ -61,6 +61,12 @@ $transaction_types = array('credit' => 'Credit', 'debit' => 'Debit', 'discount' 
     <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800'>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:400,500,700,300">
 
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" type="text/css" href="html/vendor/plugins/datatables/media/css/dataTables.bootstrap.css">
+
+    <!-- Datatables Editor CSS -->
+    <link rel="stylesheet" type="text/css" href="html/vendor/plugins/datatables/extensions/Editor/css/dataTables.editor.css">	
+	
     <!-- Theme CSS -->
     <link rel="stylesheet" type="text/css" href="html/assets/skin/default_skin/css/theme.css">
 
@@ -187,41 +193,43 @@ $transaction_types = array('credit' => 'Credit', 'debit' => 'Debit', 'discount' 
 
                 </div>
 
-				<div class="row">
-					<div class="col-md-12">
-						<div class="panel panel-visible" id="spy2">
-							<div class="panel-heading">
-								<div class="panel-title hidden-xs">
-									<span class="glyphicon glyphicon-tasks"></span>Payment Details</div>
-							</div>
-							<div class="panel-body pn">
-								<table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
-									<thead>
-										<tr>
-											<th>S No</th>
-											<th>Payment Date</th>
-											<th>Description</th>
-											<th>Transaction Type</th>
-											<th>Amount</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php $count = 1; foreach($query_data as $data) { ?>
+				<div class="tray tray-center p40 va-t posr">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-visible" id="spy2">
+								<div class="panel-heading">
+									<div class="panel-title hidden-xs">
+										<span class="glyphicon glyphicon-tasks"></span>Payment Details</div>
+								</div>
+								<div class="panel-body pn">
+									<table class="table table-striped table-hover" id="datatable2" cellspacing="0" width="100%">
+										<thead>
 											<tr>
-												<td><?php echo $count; ?></td>
-												<td><?php echo $data['payment_date'];?></td>
-												<td><?php echo strtoupper($data['description']);?></td>
-												<td><?php echo strtoupper($data['transaction_type']);?></td>
-												<td><?php echo $data['amount'];?></td>
+												<th>S No</th>
+												<th>Payment Date</th>
+												<th>Description</th>
+												<th>Transaction Type</th>
+												<th>Amount</th>
 											</tr>
-										<?php $count++;} ?>
-									</tbody>
-								</table>
+										</thead>
+										<tbody>
+											<?php $count = 1; foreach($query_data as $data) { ?>
+												<tr>
+													<td><?php echo $count; ?></td>
+													<td><?php echo $data['payment_date'];?></td>
+													<td><?php echo strtoupper($data['description']);?></td>
+													<td><?php echo strtoupper($data['transaction_type']);?></td>
+													<td><?php echo $data['amount'];?></td>
+												</tr>
+											<?php $count++;} ?>
+										</tbody>
+									</table>
+								</div>
 							</div>
-						</div>
-					</div>					
+						</div>					
+					</div>
+									
 				</div>
-				
             </section>
             <!-- End: Content -->
 
