@@ -40,7 +40,7 @@ var Demo = function() {
 			 $.ajax({
 				 url: 'validate.php',
 				 type: 'POST',
-				 data: {"username": $("#username").val(), "password": $("#password").val()},
+				 data: {"username": $("#username").val(), "password": $("#password").val(), "user_type": $("#user_type").val()},
 				 async: false,
 				 success: function(result) {
 					if(result === '1') {

@@ -137,6 +137,17 @@ if(isset($_SESSION['user_id'])) {
                                                     </span>Google+</a>
                                             </div>
                                         </div>-->
+										
+										<div class="section">
+											<label class="field select">
+												<select id="user_type" name="user_type">
+													<option value="admin">Admin</option>
+													<option value="rent_staff">Rent Staff</option>
+													<option value="own_staff">Own Staff</option>
+												</select>
+												<i class="arrow double"></i>                    
+											</label>  
+										</div><!-- end section -->										
 
                                         <div class="section">
                                             <label for="username" class="field-label text-muted fs18 mb10">Username</label>
