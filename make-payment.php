@@ -179,6 +179,7 @@ $transaction_types = array('credit' => 'Credit', 'debit' => 'Debit', 'discount' 
 										
                                     </div><!-- end .form-body section -->
                                     <div class="panel-footer text-right">
+									    <input type="checkbox" name="message" value="message"> Send Message 
                                         <button type="submit" name="submit" value="submit" class="button btn-primary"> Make Payment </button>
                                         <a href="user_listing.php"><button type="button" class="button"> Cancel </button></a>
                                     </div><!-- end .form-footer section -->

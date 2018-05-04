@@ -60,6 +60,9 @@ $query_data = $db->fetchQuery($select_query);
 
     <!-- Theme CSS -->
     <link rel="stylesheet" type="text/css" href="html/assets/skin/default_skin/css/theme.css">
+	
+    <!-- Admin Forms CSS -->
+    <link rel="stylesheet" type="text/css" href="html/assets/admin-tools/admin-forms/css/admin-forms.css">	
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="html/assets/img/favicon.ico">
@@ -121,6 +124,93 @@ $query_data = $db->fetchQuery($select_query);
 							<strong>Oops !</strong> <?php echo $error_msg; ?>
 						</div>			
 						<!-- Success / Error Message End -->						
+						
+						
+						
+						
+						
+						<div class="row">
+                    <div class="col-md-9 center-block">
+
+
+                        <!-- Form Wizard -->
+                        <div class="admin-form theme-primary">
+
+                            <div class="panel">
+                
+                                <form method="post" id="admin-form" novalidate="novalidate">
+                                    <div class="panel-body">
+                                    
+                                        <div class="section-divider mb40 mt20"><span> Make Payment </span></div><!-- .section-divider -->
+                                        
+										<input type="hidden" name="user_id" id="user_id" value="2">
+										
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="amount" class="field prepend-icon">
+                                                    <input type="text" name="amount" id="amount" class="gui-input" placeholder="Enter the Name" value="">
+                                                    <label for="amount" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                            
+                                        </div><!-- end .section row section --> 
+										
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="description" class="field prepend-icon">
+                                                    <input type="text" name="description" id="description" class="gui-input" placeholder="Enter the kctv_id" value="">
+                                                    <label for="description" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                        </div><!-- end .section row section --> 
+
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="description" class="field prepend-icon">
+                                                    <input type="text" name="description" id="description" class="gui-input" placeholder="Enter the caf_id" value="">
+                                                    <label for="description" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                        </div>
+										
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="description" class="field prepend-icon">
+                                                    <input type="text" name="description" id="description" class="gui-input" placeholder="Enter the ca_id" value="">
+                                                    <label for="description" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                        </div>
+										
+										<div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="description" class="field prepend-icon">
+                                                    <input type="text" name="description" id="description" class="gui-input" placeholder="Enter the tactv_id" value="">
+                                                    <label for="description" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                        </div>
+										
+                                    </div><!-- end .form-body section -->
+                                    <div class="panel-footer text-right">
+                                        <button type="submit" name="submit" value="submit" class="button btn-primary"> Search </button>
+                                        <a href="user_listing.php"><button type="button" class="button"> Cancel </button></a>
+                                    </div><!-- end .form-footer section -->
+                                </form>
+
+                            </div>
+
+                        </div>
+                        <!-- end: .admin-form -->
+
+                    </div>
+
+                </div>
+						
+						
+						
+						
+						
 						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
 							<a href="add-user.php"><button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Users</button></a>
