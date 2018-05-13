@@ -7,11 +7,15 @@ $error_msg = $success_msg = '';
 $user_id = '';
 if(isset($_GET['uid'])) {
 	$user_id = $_GET['uid'];
-	$select_query = "SELECT user_id from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
-	$query_data = $db->fetchQuery($select_query);
+	$user_query = "SELECT user_id, tariff_id, balance, advance from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
+	$user_data = $db->fetchQuery($user_query);
+	$tariff_data = array();
+	$remaining_amount = 0;
 	
-	if(empty($query_data)) {
+	if(empty($user_data)) {
 		$error_msg = 'User not found for this ID';
+	} else {
+		$_SESSION['remaining_amount'] = $remaining_amount = getRemainingAmount($user_id, $user_data[0]['tariff_id']);
 	}
 }
 
@@ -22,28 +26,83 @@ if(isset($_POST["submit"])) {
 	$description = $_POST["description"];
 	$transaction_type = $_POST["transaction_type"];
 	
-	if($user_id!='') {
-		$ins_data = $db->executeQuery("INSERT INTO payments (userid, amount, description, transaction_type) VALUES ('".$user_id."', '".$amount."', '".$description."', '".$transaction_type."') ");
-		$payment_id = $db->getLastInsertId();	
-		
-		if($payment_id!= '') {
-			$success_msg = 'User Payment added successfully !!!';
-			$select_query = "SELECT pid, user_id, amount, description, transaction_type, payment_date from payments where status='active' AND user_id='".$user_id."'; ";
-			$query_data = $db->fetchQuery($select_query);			
-		} else {
-			$error_msg = 'Unexpected Error. Please try again.';
-		}
+	if($amount <= 0) {
+		$error_msg = 'Please enter a Valid Amount !!!';
 	} else {
-		$error_msg = 'User not exists !!!';
+		if($user_id!='') {
+			$ins_data = $db->executeQuery("INSERT INTO payments (userid, amount, description, transaction_type) VALUES ('".$user_id."', '".$amount."', '".$description."', '".$transaction_type."') ");
+			$payment_id = $db->getLastInsertId();	
+			
+			if($payment_id!= '') {
+				$success_msg = 'User Payment added successfully !!!';
+				/* $select_query = "SELECT pid, user_id, amount, description, transaction_type, payment_date from payments where status='active' AND user_id='".$user_id."' ; ";
+				$query_data = $db->fetchQuery($select_query); */	
+				
+				$user_query = "SELECT user_id, tariff_id, balance, advance from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
+				$user_data = $db->fetchQuery($user_query);			
+				
+				$remaining_amount = ($_SESSION['remaining_amount']) ? $_SESSION['remaining_amount'] : 0; //getRemainingAmount($user_id, $user_data[0]['tariff_id']);
+				
+				if($amount == $remaining_amount) {
+					$add_query = ' balance=0, advance=0 ';
+				} else if($amount > $remaining_amount) {
+					$advance_amt = $amount - $remaining_amount;
+					$add_query = ' balance=0, advance="'.$advance_amt.'" ';
+				} else {
+					$balance_amt = $remaining_amount - $amount;
+					$add_query = ' balance="'.$balance_amt.'", advance=0 ';
+				}
+				
+				$update_balance = $db->executeQuery("UPDATE user_list SET $add_query WHERE user_id='".$user_id."' AND status='active' ");
+			} else {
+				$error_msg = 'Unexpected Error. Please try again.';
+			}
+		} else {
+			$error_msg = 'User not exists !!!';
+		}		
 	}
 }
 
 if($user_id != '') {
-	$select_query = "SELECT pid, userid, amount, description, transaction_type, payment_date from payments where status='active' AND userid='".$user_id."'; ";
-	$query_data = $db->fetchQuery($select_query);			
+	$payments_query = "SELECT pid, userid, amount, description, transaction_type, payment_date from payments where status='active' AND userid='".$user_id."' ORDER BY pid desc; ";
+	$payments_data = $db->fetchQuery($payments_query);			
 }
 
 $transaction_types = array('credit' => 'Credit', 'debit' => 'Debit', 'discount' => 'Discount');
+
+function getRemainingAmount($user_id, $tariff_id) {
+	global $db; 
+	$remaining_amount = 0;
+	
+	$user_query = "SELECT user_id, tariff_id, balance, advance from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
+	$user_data = $db->fetchQuery($user_query);	
+	
+	$tariff_query = "SELECT tariff_id, amount from tariff_list where status='active' AND tariff_id='".$tariff_id."'; ";
+	$tariff_data = $db->fetchQuery($tariff_query);
+	
+	// Calculation for Balance and Amount
+	if(!empty($tariff_data)) {
+		$tariff_amount 	= $tariff_data[0]['amount'];
+		$balance		= $user_data[0]['balance'];
+		$advance		= $user_data[0]['advance'];
+		
+		$remaining_amount = ($tariff_amount + $balance) - $advance;
+		
+		// Check If payment already paid or not
+		$payment_query = "SELECT amount FROM `payments` WHERE MONTH(`payment_date`) = MONTH(CURRENT_DATE()) AND YEAR(`payment_date`) = YEAR(CURRENT_DATE()) AND status='active' and transaction_type IN ('credit', 'discount') and userid='".$user_id."' ";
+		$payment_data = $db->fetchQuery($payment_query);
+		
+		$previous_amount = isset($payment_data[0]['amount']) ? $payment_data[0]['amount'] : 0;
+		
+		if($previous_amount!=0) {
+			if($previous_amount > $remaining_amount) {
+				return 0;
+			}
+			$remaining_amount = $remaining_amount - $previous_amount;
+		}
+	}
+	return $remaining_amount;
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -150,7 +209,7 @@ $transaction_types = array('credit' => 'Credit', 'debit' => 'Debit', 'discount' 
                                         <div class="section row">
                                             <div class="col-md-12">
                                                 <label for="amount" class="field prepend-icon">
-                                                    <input type="text" name="amount" id="amount" class="gui-input" placeholder="Enter the Amount to Pay.." value="" >
+                                                    <input type="text" name="amount" id="amount" class="gui-input" placeholder="Enter the Amount to Pay.." value="<?php echo isset($remaining_amount) ? $remaining_amount : 0; ?>" >
                                                     <label for="amount" class="field-icon"><i class="fa fa-user"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
@@ -220,7 +279,7 @@ $transaction_types = array('credit' => 'Credit', 'debit' => 'Debit', 'discount' 
 											</tr>
 										</thead>
 										<tbody>
-											<?php $count = 1; foreach($query_data as $data) { ?>
+											<?php $count = 1; foreach($payments_data as $data) { ?>
 												<tr>
 													<td><?php echo $count; ?></td>
 													<td><?php echo $data['payment_date'];?></td>
