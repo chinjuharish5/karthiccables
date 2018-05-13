@@ -109,6 +109,101 @@ $query_data = $db->fetchQuery($select_query);
                 <!-- begin: .tray-center -->
                 <div class="tray tray-center p40 va-t posr">
 
+				<div class="row">
+                    <div class="col-md-9 center-block">
+
+
+                        <!-- Form Wizard -->
+                        <div class="admin-form theme-primary">
+
+                            <div class="panel">
+                
+                                <form method="post" id="admin-form" action="javascript:void();" novalidate="novalidate">
+                                    <div class="panel-body">
+                                    
+                                        <div class="section-divider mb40 mt20"><span> Search Users </span></div><!-- .section-divider -->
+										
+										<div class="section row">
+                                            <div class="col-md-12" style="color:red">
+												Note : Enter any one value to search
+											</div>
+										</div>
+										
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="search_name" class="field prepend-icon">
+                                                    <input type="text" name="search_name" id="search_name" colIndex="5" class="gui-input user_search_class" placeholder="Enter the Name" value="">
+                                                    <label for="search_name" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                            
+                                        </div><!-- end .section row section --> 
+										
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="search_mobile" class="field prepend-icon">
+                                                    <input type="text" name="search_mobile" colIndex="6" id="search_mobile" class="gui-input user_search_class" placeholder="Enter the Mobile Number" value="">
+                                                    <label for="search_mobile" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                            
+                                        </div><!-- end .section row section --> 										
+										
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="search_kctvid" class="field prepend-icon">
+                                                    <input type="text" name="search_kctvid" id="search_kctvid" colIndex="1" class="gui-input user_search_class" placeholder="Enter the KCTV ID" value="">
+                                                    <label for="search_kctvid" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                        </div><!-- end .section row section --> 
+
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="search_cafid" class="field prepend-icon">
+                                                    <input type="text" name="search_cafid" id="search_cafid" colIndex="2" class="gui-input user_search_class" placeholder="Enter the CAF ID" value="">
+                                                    <label for="search_cafid" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                        </div>
+										
+                                        <div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="search_caid" class="field prepend-icon">
+                                                    <input type="text" name="search_caid" id="search_caid" colIndex="3" class="gui-input user_search_class" placeholder="Enter the CA ID" value="">
+                                                    <label for="search_caid" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                        </div>
+										
+										<div class="section row">
+                                            <div class="col-md-12">
+                                                <label for="search_tactvid" class="field prepend-icon">
+                                                    <input type="text" name="search_tactvid" id="search_tactvid" colIndex="4" class="gui-input user_search_class" placeholder="Enter the TACTV ID" value="">
+                                                    <label for="search_tactvid" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                </label>
+                                            </div><!-- end section -->
+                                        </div>
+										
+                                    </div><!-- end .form-body section -->
+                                    <div class="panel-footer text-right">
+                                        <button type="button" name="submit" value="submit" id="search_user" class="button btn-primary"> Search </button>
+                                        <!--<a href="user_listing.php">-->
+											<button type="reset" class="button" id="reset_user"> Reset </button>
+										<!--</a>-->
+                                    </div><!-- end .form-footer section -->
+                                </form>
+
+                            </div>
+
+                        </div>
+                        <!-- end: .admin-form -->
+
+                    </div>
+
+                </div>				
+				
+				
                     <div class="row">
 					
 						<!-- Success / Error Message -->
@@ -124,93 +219,7 @@ $query_data = $db->fetchQuery($select_query);
 							<strong>Oops !</strong> <?php echo $error_msg; ?>
 						</div>			
 						<!-- Success / Error Message End -->						
-						
-						
-						
-						
-						
-						<div class="row">
-                    <div class="col-md-9 center-block">
 
-
-                        <!-- Form Wizard -->
-                        <div class="admin-form theme-primary">
-
-                            <div class="panel">
-                
-                                <form method="post" id="admin-form" novalidate="novalidate">
-                                    <div class="panel-body">
-                                    
-                                        <div class="section-divider mb40 mt20"><span> Make Payment </span></div><!-- .section-divider -->
-                                        
-										<input type="hidden" name="user_id" id="user_id" value="2">
-										
-                                        <div class="section row">
-                                            <div class="col-md-12">
-                                                <label for="amount" class="field prepend-icon">
-                                                    <input type="text" name="amount" id="amount" class="gui-input" placeholder="Enter the Name" value="">
-                                                    <label for="amount" class="field-icon"><i class="fa fa-user"></i></label>  
-                                                </label>
-                                            </div><!-- end section -->
-                                            
-                                        </div><!-- end .section row section --> 
-										
-                                        <div class="section row">
-                                            <div class="col-md-12">
-                                                <label for="description" class="field prepend-icon">
-                                                    <input type="text" name="description" id="description" class="gui-input" placeholder="Enter the kctv_id" value="">
-                                                    <label for="description" class="field-icon"><i class="fa fa-user"></i></label>  
-                                                </label>
-                                            </div><!-- end section -->
-                                        </div><!-- end .section row section --> 
-
-                                        <div class="section row">
-                                            <div class="col-md-12">
-                                                <label for="description" class="field prepend-icon">
-                                                    <input type="text" name="description" id="description" class="gui-input" placeholder="Enter the caf_id" value="">
-                                                    <label for="description" class="field-icon"><i class="fa fa-user"></i></label>  
-                                                </label>
-                                            </div><!-- end section -->
-                                        </div>
-										
-                                        <div class="section row">
-                                            <div class="col-md-12">
-                                                <label for="description" class="field prepend-icon">
-                                                    <input type="text" name="description" id="description" class="gui-input" placeholder="Enter the ca_id" value="">
-                                                    <label for="description" class="field-icon"><i class="fa fa-user"></i></label>  
-                                                </label>
-                                            </div><!-- end section -->
-                                        </div>
-										
-										<div class="section row">
-                                            <div class="col-md-12">
-                                                <label for="description" class="field prepend-icon">
-                                                    <input type="text" name="description" id="description" class="gui-input" placeholder="Enter the tactv_id" value="">
-                                                    <label for="description" class="field-icon"><i class="fa fa-user"></i></label>  
-                                                </label>
-                                            </div><!-- end section -->
-                                        </div>
-										
-                                    </div><!-- end .form-body section -->
-                                    <div class="panel-footer text-right">
-                                        <button type="submit" name="submit" value="submit" class="button btn-primary"> Search </button>
-                                        <a href="user_listing.php"><button type="button" class="button"> Cancel </button></a>
-                                    </div><!-- end .form-footer section -->
-                                </form>
-
-                            </div>
-
-                        </div>
-                        <!-- end: .admin-form -->
-
-                    </div>
-
-                </div>
-						
-						
-						
-						
-						
 						
 						<div class="col-md-2" style="margin-bottom: 20px;font-size:20px">
 							<a href="add-user.php"><button type="button" class="btn btn-rounded btn-primary btn-block" ><span class="glyphicon glyphicon-plus-sign"></span> Add New Users</button></a>
@@ -377,7 +386,7 @@ $query_data = $db->fetchQuery($select_query);
 
            // Init Datatables with Tabletools Addon    
 
-            $('#datatable2').dataTable({
+            var userDataTable = $('#datatable2').DataTable({
                 "aoColumnDefs": [{
                     'bSortable': false,
                     'aTargets': [-1]
@@ -403,6 +412,45 @@ $query_data = $db->fetchQuery($select_query);
 
             // Add Placeholder text to datatables filter bar
             $('.dataTables_filter input').attr("placeholder", "Enter Terms...");
+
+            //userDataTable.columns().eq(0).each(function(colIdx) {
+			//console.log('Colid : ' + colIdx);
+                $('#search_user').on('click', function() {
+					// Get input value which is not empty
+					var colIndex = '';
+					var searchValue = '';
+					$('.user_search_class').each(function() {
+						if($(this).val()!='') { 
+							searchValue = $(this).val();
+							colIndex = $(this).attr('colIndex');
+						}
+					});
+					
+					// Trigger Search
+					if(searchValue!='') {
+						userDataTable
+							.column(colIndex)
+							.search(searchValue)
+							.draw();						
+					} else {
+						alert('Please enter any value to search');
+					}
+                });
+				
+				$('#reset_user').on('click', function() {
+					userDataTable
+							.column('')
+							.search('')
+							.draw();	
+				});
+            //});
+			
+			/*$('#search_user').on('click', function() {
+				$('#datatable2').dataTable()
+					.column(1)
+					.search('2976')
+					.draw();
+			});*/
 
         });
     </script>
