@@ -130,57 +130,50 @@ $query_data = $db->fetchQuery($select_query);
 										</div>
 										
                                         <div class="section row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <label for="search_name" class="field prepend-icon">
-                                                    <input type="text" name="search_name" id="search_name" colIndex="5" class="gui-input user_search_class" placeholder="Enter the Name" value="">
+                                                    <input type="text" name="search_name" id="search_name" colIndex="5" class="gui-input user_search_class" placeholder="Search by Name" value="">
                                                     <label for="search_name" class="field-icon"><i class="fa fa-user"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
-                                            
-                                        </div><!-- end .section row section --> 
-										
-                                        <div class="section row">
-                                            <div class="col-md-12">
+											
+                                            <div class="col-md-6">
                                                 <label for="search_mobile" class="field prepend-icon">
-                                                    <input type="text" name="search_mobile" colIndex="6" id="search_mobile" class="gui-input user_search_class" placeholder="Enter the Mobile Number" value="">
-                                                    <label for="search_mobile" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                    <input type="text" name="search_mobile" colIndex="6" id="search_mobile" class="gui-input user_search_class" placeholder="Search by Mobile Number" value="">
+                                                    <label for="search_mobile" class="field-icon"><i class="fa fa-mobile-phone"></i></label>  
                                                 </label>
-                                            </div><!-- end section -->
+                                            </div><!-- end section -->											
                                             
-                                        </div><!-- end .section row section --> 										
+                                        </div><!-- end .section row section --> 									
 										
                                         <div class="section row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <label for="search_kctvid" class="field prepend-icon">
-                                                    <input type="text" name="search_kctvid" id="search_kctvid" colIndex="1" class="gui-input user_search_class" placeholder="Enter the KCTV ID" value="">
-                                                    <label for="search_kctvid" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                    <input type="text" name="search_kctvid" id="search_kctvid" colIndex="1" class="gui-input user_search_class" placeholder="Search by KCTV ID" value="">
+                                                    <label for="search_kctvid" class="field-icon"><i class="fa fa-lock"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
-                                        </div><!-- end .section row section --> 
 
-                                        <div class="section row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <label for="search_cafid" class="field prepend-icon">
-                                                    <input type="text" name="search_cafid" id="search_cafid" colIndex="2" class="gui-input user_search_class" placeholder="Enter the CAF ID" value="">
-                                                    <label for="search_cafid" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                    <input type="text" name="search_cafid" id="search_cafid" colIndex="2" class="gui-input user_search_class" placeholder="Search by CAF ID" value="">
+                                                    <label for="search_cafid" class="field-icon"><i class="fa fa-lock"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
                                         </div>
 										
                                         <div class="section row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <label for="search_caid" class="field prepend-icon">
-                                                    <input type="text" name="search_caid" id="search_caid" colIndex="3" class="gui-input user_search_class" placeholder="Enter the CA ID" value="">
-                                                    <label for="search_caid" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                    <input type="text" name="search_caid" id="search_caid" colIndex="3" class="gui-input user_search_class" placeholder="Search by CA ID" value="">
+                                                    <label for="search_caid" class="field-icon"><i class="fa fa-lock"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
-                                        </div>
-										
-										<div class="section row">
-                                            <div class="col-md-12">
+
+                                            <div class="col-md-6">
                                                 <label for="search_tactvid" class="field prepend-icon">
-                                                    <input type="text" name="search_tactvid" id="search_tactvid" colIndex="4" class="gui-input user_search_class" placeholder="Enter the TACTV ID" value="">
-                                                    <label for="search_tactvid" class="field-icon"><i class="fa fa-user"></i></label>  
+                                                    <input type="text" name="search_tactvid" id="search_tactvid" colIndex="4" class="gui-input user_search_class" placeholder="Search by TACTV ID" value="">
+                                                    <label for="search_tactvid" class="field-icon"><i class="fa fa-lock"></i></label>  
                                                 </label>
                                             </div><!-- end section -->
                                         </div>
