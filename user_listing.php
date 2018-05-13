@@ -241,7 +241,7 @@ $query_data = $db->fetchQuery($select_query);
                                                 <th>House Type</th>
                                                 <!--<th>Account Status</th>-->
                                                 <th>Installation Date</th>
-                                                <!--<th>Activation Date</th>-->
+                                                <th>Activation Date</th>
                                                 <th>Tariff</th>
                                                 <th>Advance</th>
                                                 <th>Balance</th>
@@ -271,7 +271,7 @@ $query_data = $db->fetchQuery($select_query);
 													<td><?php echo strtoupper($data['house_type']);?></td>
 													<!--<td><?php echo strtoupper($data['acc_status']);?></td>-->
 													<td><?php echo strtoupper($data['installation_date']);?></td>
-													<!--<td><?php echo strtoupper($data['activation_date']);?></td>-->
+													<td><?php echo strtoupper($data['activation_date']);?></td>
 													<td><?php echo strtoupper($data['tariff']);?></td>
 													<td><?php echo strtoupper($data['advance']);?></td>
 													<td><?php echo strtoupper($data['balance']);?></td>
