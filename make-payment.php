@@ -187,10 +187,18 @@ function getRemainingAmount($user_id, $tariff_id) {
 					<strong>Oops !</strong> <?php echo $error_msg; ?>
 				</div>			
 				<!-- Success / Error Message End -->
+				
+				<div class="row">
+                    <div class="wrapper text-right col-md-11">
+                       <div class="text-right">
+                        <button type="button" class="btn btn-rounded btn-success" id="show-history">SHOW HISTORY</button>
+						<button type="button" class="btn btn-rounded btn-success" id="hide-history" style="display:none">BACK TO PAYMENT</button>
+                       </div>
+                    </div>
+                </div>					
 
-                <h2 class="lh30 mt15 text-center">Make <b class="text-primary">Payment</b></h2>			
-
-                <div class="row">
+                <div class="row make-payment-main-div make-payment-metabox">
+				<h2 class="lh30 mt15 text-center">Make <b class="text-primary">Payment</b></h2>		
                     <div class="col-md-9 center-block">
 
 
@@ -257,9 +265,9 @@ function getRemainingAmount($user_id, $tariff_id) {
 
                     </div>
 
-                </div>
+                </div>		
 
-				<div class="tray tray-center p40 va-t posr">
+				<div class="tray tray-center p40 va-t posr make-payment-main-div make-payment-history" style="display:none">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="panel panel-visible" id="spy2">
@@ -459,7 +467,21 @@ function getRemainingAmount($user_id, $tariff_id) {
             // MISC DATATABLE HELPER FUNCTIONS
 
             // Add Placeholder text to datatables filter bar
-            $('.dataTables_filter input').attr("placeholder", "Enter Terms...");		
+            $('.dataTables_filter input').attr("placeholder", "Enter Terms...");
+
+			$('#show-history').on('click', function() {
+				$('.make-payment-main-div').hide();
+				$('.make-payment-history').show();
+				$('#show-history').hide();
+				$('#hide-history').show();
+			});
+			
+			$('#hide-history').on('click', function() {
+				$('.make-payment-main-div').hide();
+				$('.make-payment-metabox').show();
+				$('#hide-history').hide();
+				$('#show-history').show();
+			});			
 		
         });
     </script>
