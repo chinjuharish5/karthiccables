@@ -7,7 +7,7 @@ $error_msg = $success_msg = '';
 $user_id = '';
 if(isset($_GET['uid'])) {
 	$user_id = $_GET['uid'];
-	$user_query = "SELECT user_id, tariff_id, balance, advance from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
+	$user_query = "SELECT * from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
 	$user_data = $db->fetchQuery($user_query);
 	$tariff_data = array();
 	$remaining_amount = 0;
@@ -38,7 +38,7 @@ if(isset($_POST["submit"])) {
 				/* $select_query = "SELECT pid, user_id, amount, description, transaction_type, payment_date from payments where status='active' AND user_id='".$user_id."' ; ";
 				$query_data = $db->fetchQuery($select_query); */	
 				
-				$user_query = "SELECT user_id, tariff_id, balance, advance from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
+				$user_query = "SELECT * from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
 				$user_data = $db->fetchQuery($user_query);			
 				
 				$remaining_amount = ($_SESSION['remaining_amount']) ? $_SESSION['remaining_amount'] : 0; //getRemainingAmount($user_id, $user_data[0]['tariff_id']);
@@ -74,7 +74,7 @@ function getRemainingAmount($user_id, $tariff_id) {
 	global $db; 
 	$remaining_amount = 0;
 	
-	$user_query = "SELECT user_id, tariff_id, balance, advance from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
+	$user_query = "SELECT * from user_list where user_type='customer' and status='active' AND user_id='".$user_id."'; ";
 	$user_data = $db->fetchQuery($user_query);	
 	
 	$tariff_query = "SELECT tariff_id, amount from tariff_list where status='active' AND tariff_id='".$tariff_id."'; ";
@@ -172,7 +172,7 @@ function getRemainingAmount($user_id, $tariff_id) {
 			<!-- End: Topbar -->
 
             <!-- Begin: Content -->
-            <section id="content" class="animated fadeIn">
+            <section id="content" class="animated fadeIn">		
 			
 				<!-- Success / Error Message -->
 				<div class="alert alert-success alert-dismissable" <?php if($success_msg=='') {echo 'style="display:none"';} ?>>
@@ -284,6 +284,7 @@ function getRemainingAmount($user_id, $tariff_id) {
 												<th>Description</th>
 												<th>Transaction Type</th>
 												<th>Amount</th>
+												<th>Actions</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -294,6 +295,36 @@ function getRemainingAmount($user_id, $tariff_id) {
 													<td><?php echo strtoupper($data['description']);?></td>
 													<td><?php echo strtoupper($data['transaction_type']);?></td>
 													<td><?php echo $data['amount'];?></td>
+													<td>
+														<div class="divToPrint-<?php echo $count; ?>" style="display:none">
+														  <div style="width:300px;height:300px;background-color:teal;">
+															<?php
+																echo "<div> <strong>Bill Number : ".strtotime($data['payment_date'])."</strong></div>";
+																echo "<div><strong>KARTHICKCABLETV PRORIETOR.K.MYILVANAN 04222251666 - 9489075500 </strong></div><br>";
+																
+																echo "<hr>";
+																
+																echo "<div> <strong>Customer ID : </strong>KC".$user_data[0]['kctv_id']."</div>";
+																echo "<div> Dear <strong>".ucfirst($user_data[0]['user_name'])."</strong></div>";
+																echo "<div> CAF ID : ".$user_data[0]['caf_id']."</div>";
+																echo "<div> ".$user_data[0]['door_no']." ".$user_data[0]['street_name']."</div><br>";
+																
+																echo "<hr>";
+																
+																echo "<div> <strong>Paid : ".$data['amount']."</strong></div>";
+																echo "<div> Current Balance : ".$_SESSION['remaining_amount']."</div>";
+																echo "<div> Payment Date : ".$data['payment_date']."</div>";
+																
+																echo "<hr>";
+																
+																echo "<div><strong>KARTHIC CABLES, COIMBATORE</strong></div>";
+															?>
+														  </div>
+														</div>
+														<div >
+														  <button type="button" class="btn btn-xs btn-info btn-block print-receipt" value="print" count="<?php echo $count; ?>" >Print</button>
+														</div>	
+													</td>
 												</tr>
 											<?php $count++;} ?>
 										</tbody>
@@ -484,6 +515,16 @@ function getRemainingAmount($user_id, $tariff_id) {
 			});			
 		
         });
+		
+     $('.print-receipt').on('click', function() {
+		var count = $(this).attr('count');
+		var divElem = 'divToPrint-' + count;
+	   var divToPrint = $('.' + divElem); //document.getElementById('divToPrint');
+	   var popupWin = window.open('', '_blank', 'width=300,height=300');
+	   popupWin.document.open();
+	   popupWin.document.write('<html><body onload="window.print()">' + divToPrint.html() + '</html>');
+	   popupWin.document.close();
+   });  		
     </script>
     <!-- END: PAGE SCRIPTS -->
 

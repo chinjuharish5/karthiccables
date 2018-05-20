@@ -1,4 +1,3 @@
-<style>::placeholder {color:lightgrey}</style>
 <header class="navbar navbar-fixed-top bg-light">
 		<div class="navbar-branding">
 				<a class="navbar-brand" href="dashboard.php"> <b>Karthic</b>Cables
