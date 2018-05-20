@@ -214,6 +214,12 @@ function getRemainingAmount($user_id, $tariff_id) {
                                         
 										<input type="hidden" name="user_id" id="user_id" value="<?php echo $user_id; ?>" />
 										
+										<div class="section row">
+                                            <div class="col-md-12" >
+												<strong>Balance Amount :</strong> <?php echo isset($remaining_amount) ? $remaining_amount : 0;?>
+											</div>
+										</div>										
+										
                                         <div class="section row">
                                             <div class="col-md-12">
                                                 <label for="amount" class="field prepend-icon">
